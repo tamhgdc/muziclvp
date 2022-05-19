@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/zing-mp3/static/css/main.4a110fad.css",
+    "main.js": "/zing-mp3/static/js/main.02ce6d6f.js",
+    "static/media/avatar.jpg": "/zing-mp3/static/media/avatar.9f05a3d5bb003a14d01c.jpg",
+    "static/media/loading.gif": "/zing-mp3/static/media/loading.42aaa181adb3af3bef08.gif",
+    "index.html": "/zing-mp3/index.html",
+    "main.4a110fad.css.map": "/zing-mp3/static/css/main.4a110fad.css.map",
+    "main.02ce6d6f.js.map": "/zing-mp3/static/js/main.02ce6d6f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4a110fad.css",
+    "static/js/main.02ce6d6f.js"
+  ]
+}
