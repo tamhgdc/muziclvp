@@ -1,0 +1,27 @@
+.banner-top100{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.bg-alpha2, .bg-blur2{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 42.5%;
+    z-index: -1;
+}
+.bg-blur2{
+    background: url("https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.6.24/static/media/banner-100.33cafe6b.png") center top / cover no-repeat;
+    opacity: 0.3;
+}
+.bg-alpha2{
+    background: linear-gradient(180deg,hsla(0,0%,100%,0) 37%,#010101);
+    inset: 0px;
+}
+
+.top__100__item{
+    width: 17.13%;
+    padding: 0 15px;
+}
+
