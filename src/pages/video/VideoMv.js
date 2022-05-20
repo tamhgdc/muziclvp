@@ -355,7 +355,7 @@ const VideoMv = ({ recommends }) => {
             <div className="controls__item__video adjust__time">
               {currentTime}
               <span>|</span>
-              {convertMS(dataVideo.duration)}
+              {convertMS(dataVideo?.duration)}
             </div>
           </div>
           <div className="controls__video__right">
