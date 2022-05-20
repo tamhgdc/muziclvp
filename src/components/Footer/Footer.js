@@ -31,11 +31,9 @@ const Footer = () => {
   const [timeUpdateChange, setTimeUpdateChange] = useState("");
   const [timeChange, setTimeChange] = useState(0);
   const [replaceTime, setReplaceTime] = useState(false);
-  const [isSound, setIsSound] = useState(false);
-  const [widthSound, setWidthSound] = useState("100");
-  const [saveVolume, setSaveVolume] = useState(
-    JSON.parse(localStorage.getItem("volume")) || "100"
-  );
+  const [activeSound, setActiveSound] = useState(false);
+  const [widthSound, setWidthSound] = useState("0");
+  const [saveSound, setSaveSound] = useState("");
   const [repeatTolltip, setRepeatTolltip] = useState(
     JSON.parse(localStorage.getItem("repeatTolltip")) || ""
   );
@@ -221,44 +219,38 @@ const Footer = () => {
     setReplaceTime(false);
   };
 
-  const handleVolume = () => {
-    setIsSound(!isSound);
-    audio.muted = !isSound;
-    if (saveVolume === "0") {
-      setWidthSound("100");
-      setSaveVolume("100");
-      setIsSound(false);
-    }
+  //volume
+  // muted & unmuted volume
+  const handleClickSound = () => {
+    setActiveSound(!activeSound);
   };
+
   useEffect(() => {
     if (audio) {
-      if (audio.muted) {
-        setWidthSound("0");
-        localStorage.setItem("volume", JSON.stringify("0"));
-      } else if (saveVolume) {
-        setWidthSound(saveVolume);
-        localStorage.setItem("volume", JSON.stringify(saveVolume));
-      } else if (!audio.muted) {
+      if (!activeSound) {
         setWidthSound("100");
-        localStorage.setItem("volume", JSON.stringify("100"));
+        audio.muted = false;
+        audio.volume = 1;
+        if (saveSound) {
+          setWidthSound(saveSound);
+          audio.volume = saveSound / 100;
+        }
+      } else {
+        setWidthSound("0");
+        audio.muted = true;
       }
-      audio.volume = saveVolume / 100;
     }
-  }, [audio, saveVolume]);
+  }, [audio, activeSound]);
 
+  //change volume
   const changeVolume = (e) => {
-    setWidthSound(e.target.value);
-    setSaveVolume(e.target.value);
     if (e.target.value > 0) {
-      audio.muted = false;
-      setIsSound(false);
-      let volume = (1 / 100) * e.target.value;
-      audio.volume = volume;
+      setWidthSound(e.target.value);
+      setSaveSound(e.target.value);
+      audio.volume = e.target.value / 100;
+      setActiveSound(false);
     } else {
-      setIsSound(true);
-      audio.muted = true;
-      setSaveVolume("100");
-      audio.volume = 1;
+      setActiveSound(true);
     }
   };
 
@@ -518,8 +510,8 @@ const Footer = () => {
           </div>
         </div>
         <div className="media__volume">
-          <div className="icont__volume" onClick={handleVolume}>
-            {!isSound ? (
+          <div className="icont__volume" onClick={handleClickSound}>
+            {!activeSound ? (
               <i className="fa fa-volume-up"></i>
             ) : (
               <i className="fa-solid fa-volume-xmark"></i>
