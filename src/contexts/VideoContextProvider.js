@@ -16,6 +16,7 @@ const VideoContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("checkZoom")) || false
   );
   const [checkRenderList, setCheckRenderList] = useState(false);
+  const [checkChangeVideo, setCheckChangeVideo] = useState(false);
   const getVideo = async () => {
     await getVideoApi(idVideo).then((data) => {
       setDataVideo(data.data.data);
@@ -45,6 +46,8 @@ const VideoContextProvider = ({ children }) => {
     setCheckZoom,
     setCheckRenderList,
     checkRenderList,
+    checkChangeVideo,
+    setCheckChangeVideo,
   };
 
   return <VideoContext.Provider value={data}>{children}</VideoContext.Provider>;

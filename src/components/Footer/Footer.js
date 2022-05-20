@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { SongContext } from "../../contexts/SongContextProvider";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import { useParams, useNavigate } from "react-router-dom";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 let useClickOutSide = (handler) => {
   let domNode = useRef();
@@ -32,9 +33,7 @@ const Footer = () => {
   const [timeChange, setTimeChange] = useState(0);
   const [replaceTime, setReplaceTime] = useState(false);
   const [activeSound, setActiveSound] = useState(false);
-  const [widthSound, setWidthSound] = useState(
-    JSON.parse(localStorage.getItem("saveVolume")) || "100"
-  );
+  const [widthSound, setWidthSound] = useState("100");
   const [saveSound, setSaveSound] = useState("");
   const [repeatTolltip, setRepeatTolltip] = useState(
     JSON.parse(localStorage.getItem("repeatTolltip")) || ""
@@ -53,6 +52,7 @@ const Footer = () => {
   const { songUrl, infoSong, setIdSong } = useContext(SongContext);
   const { setCheckPlayAudio, checkPlayAudio, setShowRightBar, showRightBar } =
     useContext(PlayListContext);
+  const { checkChangeVideo } = useContext(VideoContext);
 
   let i = "";
   let data = [];
@@ -175,6 +175,12 @@ const Footer = () => {
   };
 
   useEffect(() => {
+    if (checkChangeVideo) {
+      pauseAudio();
+    }
+  }, [checkChangeVideo]);
+
+  useEffect(() => {
     localStorage.setItem("repeatTolltip", JSON.stringify(repeatTolltip));
   }, [repeatTolltip]);
 
@@ -231,18 +237,17 @@ const Footer = () => {
     if (audio) {
       if (!activeSound) {
         setWidthSound("100");
-        audio.muted = false;
         audio.volume = 1;
-        localStorage.setItem("saveVolume", "1");
+
+        audio.muted = false;
+
         if (saveSound) {
           setWidthSound(saveSound);
           audio.volume = saveSound / 100;
-          localStorage.setItem("saveVolume", JSON.stringify(saveSound));
         }
       } else {
         setWidthSound("0");
         audio.muted = true;
-        localStorage.setItem("saveVolume", "0");
       }
     }
   }, [audio, activeSound]);

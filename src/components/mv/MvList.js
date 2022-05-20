@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const MvList = ({ playList }) => {
-  const { setIdVideo, setCheckRenderList } = useContext(VideoContext);
+  const { setIdVideo, setCheckRenderList, setCheckChangeVideo } =
+    useContext(VideoContext);
   const navigate = useNavigate();
 
   const handleClickVideo = (item) => {
@@ -12,6 +13,7 @@ const MvList = ({ playList }) => {
     setIdVideo(item.encodeId);
     localStorage.setItem("idVideo", JSON.stringify(item.encodeId));
     setCheckRenderList(true);
+    setCheckChangeVideo(true);
   };
 
   return (

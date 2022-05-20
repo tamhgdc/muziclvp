@@ -42,7 +42,7 @@ const VideoMv = ({ recommends }) => {
   //xử lý video
   const [currentTime, setCurrentTime] = useState("");
   const [saveCurrentTime, setSaveCurrentTime] = useState("");
-  const [widthVideo, setWidthVideo] = useState("");
+  const [widthVideo, setWidthVideo] = useState("0");
   const [saveWidthVideo, setSaveWidthVideo] = useState("");
   const [setting, setSetting] = useState(false);
   const [urlVideo, setUrlVideo] = useState("");
@@ -234,8 +234,8 @@ const VideoMv = ({ recommends }) => {
     if (video) {
       if (activeSound) {
         setWidthSound("100");
-        video.muted = false;
         video.volume = 1;
+        video.muted = false;
         if (saveSound) {
           setWidthSound(saveSound);
           video.volume = saveSound / 100;
@@ -243,6 +243,7 @@ const VideoMv = ({ recommends }) => {
       } else {
         setWidthSound("0");
         video.muted = true;
+        video.volume = 0;
       }
     }
   }, [video, activeSound]);
