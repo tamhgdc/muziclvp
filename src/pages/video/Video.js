@@ -18,6 +18,7 @@ const Video = () => {
     checkRenderList,
     idVideo,
     setIdVideo,
+    setCheckRenderList,
   } = useContext(VideoContext);
   const [recommends, setReCommends] = useState("");
 
@@ -30,6 +31,10 @@ const Video = () => {
     setAutoPlayVideo(!autoPlayVideo);
     setRepeatVideo(!repeatVideo);
   };
+
+  useEffect(() => {
+    setCheckRenderList(true);
+  }, []);
 
   useEffect(() => {
     if (!checkRenderList && dataVideo) {
