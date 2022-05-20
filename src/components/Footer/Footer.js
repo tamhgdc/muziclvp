@@ -32,7 +32,9 @@ const Footer = () => {
   const [timeChange, setTimeChange] = useState(0);
   const [replaceTime, setReplaceTime] = useState(false);
   const [activeSound, setActiveSound] = useState(false);
-  const [widthSound, setWidthSound] = useState("0");
+  const [widthSound, setWidthSound] = useState(
+    JSON.parse(localStorage.getItem("saveVolume")) || "100"
+  );
   const [saveSound, setSaveSound] = useState("");
   const [repeatTolltip, setRepeatTolltip] = useState(
     JSON.parse(localStorage.getItem("repeatTolltip")) || ""
