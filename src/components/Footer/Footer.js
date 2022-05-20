@@ -231,13 +231,16 @@ const Footer = () => {
         setWidthSound("100");
         audio.muted = false;
         audio.volume = 1;
+        localStorage.setItem("saveVolume", "1");
         if (saveSound) {
           setWidthSound(saveSound);
           audio.volume = saveSound / 100;
+          localStorage.setItem("saveVolume", JSON.stringify(saveSound));
         }
       } else {
         setWidthSound("0");
         audio.muted = true;
+        localStorage.setItem("saveVolume", "0");
       }
     }
   }, [audio, activeSound]);
