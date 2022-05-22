@@ -4,8 +4,7 @@ import { MvContext } from "../../contexts/MvContextProvider";
 const SearchMV = () => {
   const [isDisplay, setIsDisplay] = useState(false);
   const [isDisplay2, setIsDisplay2] = useState(false);
-  const { categories, setId, nameCategory, setNameCategory } =
-    useContext(MvContext);
+  const { categories, setId, nameCategory } = useContext(MvContext);
 
   return (
     <div className="mv__content">
@@ -34,17 +33,18 @@ const SearchMV = () => {
         </div>
         {isDisplay && (
           <div className="list__all__select">
-            {categories.map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  className="list__item__select__all"
-                  onClick={() => setId(item.id)}
-                >
-                  {item.name}
-                </div>
-              );
-            })}
+            {categories &&
+              categories.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="list__item__select__all"
+                    onClick={() => setId(item.id)}
+                  >
+                    {item.name}
+                  </div>
+                );
+              })}
           </div>
         )}
       </div>

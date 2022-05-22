@@ -238,9 +238,7 @@ const Footer = () => {
       if (!activeSound) {
         setWidthSound("100");
         audio.volume = 1;
-
         audio.muted = false;
-
         if (saveSound) {
           setWidthSound(saveSound);
           audio.volume = saveSound / 100;
