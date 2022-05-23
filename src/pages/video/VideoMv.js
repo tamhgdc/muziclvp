@@ -102,6 +102,7 @@ const VideoMv = ({ recommends }) => {
     video.play();
     updateOnTime();
     setIsPlay(true);
+    onEnded();
   };
   const pauseVideo = () => {
     video.pause();
@@ -122,6 +123,9 @@ const VideoMv = ({ recommends }) => {
         }
       }
     };
+  };
+  //on ended
+  const onEnded = () => {
     video.onended = () => {
       //autoPlayVideo
       if (autoPlayVideo) {
