@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { SongContext } from "../../contexts/SongContextProvider";
 
 const PersonalContent = () => {
+  const { setIdSong } = useContext(SongContext);
+
   return (
     <div className="music__list__library">
       <div className="option__music__list">
@@ -44,7 +47,10 @@ const PersonalContent = () => {
               <div className="checkbox__music__library">
                 <input type="checkbox" className="select__all__music" />
               </div>
-              <div className="img__music__library">
+              <div
+                className="img__music__library"
+                onClick={() => setIdSong("ZZO0F8BW")}
+              >
                 <img
                   src="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/c/6/d/e/c6def069a1a885c41fe479358fa7c506.jpg"
                   alt=""

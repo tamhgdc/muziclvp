@@ -9,3 +9,5 @@ export const API_INFO_SONG =
 export const PLAYLIST_API =
   "https://music-player-pink.vercel.app/api/playlist?id=";
 export const VIDEO_API = "https://music-player-pink.vercel.app/api/video?id=";
+export const SEARCH =
+  "https://music-player-pink.vercel.app/api/search?keyword=";

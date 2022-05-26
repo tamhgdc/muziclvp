@@ -32,7 +32,7 @@ const PlayList = () => {
           <a href="#" className="title__one__line">
             love
           </a>
-          <div>Trần minh</div>
+          <div>Việt Phú</div>
         </div>
       </div>
     </div>

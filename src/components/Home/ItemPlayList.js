@@ -15,7 +15,6 @@ const ItemPlayList = ({ playList, checkTitle }) => {
       <Link to={`${playList.link}`} onClick={handlePlaylist}>
         <div className="img__playlist__selection">
           <img src={playList.thumbnail} alt="" />
-
           <div
             className="option__playlist__selection"
             style={{

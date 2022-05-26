@@ -1,5 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import avatar from "../../assets/images/avatar.jpg";
+import { SearchContext } from "../../contexts/SearchContextProvider";
+import SingerItem from "../../components/Home/SingerItem";
+import loadingGift from "../../assets/images/loading.gif";
+import { PlayListContext } from "../../contexts/PlayListContextProvider";
+import { SongContext } from "../../contexts/SongContextProvider";
 
 let useClickOutSide = (handler) => {
   let domNode = useRef();
@@ -22,13 +27,48 @@ let useClickOutSide = (handler) => {
 
 const Header = () => {
   const [isDisplay, setIsDisplay] = useState(false);
-
   const [isFullscreen, setIsFullScreen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [musicQuality, setMusicQuality] = useState(false);
+  const [showSuggest, setShowSuggest] = useState(false);
+  const [value, setValue] = useState("");
+
+  const { searchData, setKeyWord, keyword } = useContext(SearchContext);
+  const { setIdSong, setLoaderSong, loaderSong } = useContext(SongContext);
+  const { setCheckPlayAudio, checkPlayAudio, setCheckModalVip } =
+    useContext(PlayListContext);
+  const handleOnclick = (item) => {
+    if (JSON.parse(localStorage.getItem("idSong")) !== item.encodeId) {
+      if (item.streamingStatus !== 2) {
+        localStorage.setItem("idSong", JSON.stringify(item.encodeId));
+        setIdSong(item.encodeId);
+        setLoaderSong(true);
+        setCheckPlayAudio(!checkPlayAudio);
+      } else {
+        setCheckModalVip(true);
+      }
+    } else {
+      setCheckPlayAudio(!checkPlayAudio);
+    }
+  };
+
+  useEffect(() => {
+    let searchTimeOut;
+    if (value !== "") {
+      searchTimeOut = setTimeout(() => {
+        setKeyWord(value);
+      }, 200);
+    } else {
+      setKeyWord("");
+    }
+    return () => clearTimeout(searchTimeOut);
+  }, [value]);
 
   let domNode = useClickOutSide(() => {
     setIsDisplay(false);
+  });
+  let suggestNode = useClickOutSide(() => {
+    setShowSuggest(false);
   });
 
   return (
@@ -43,14 +83,121 @@ const Header = () => {
               <i className="fa-solid fa-arrow-right"></i>
             </a>
           </div>
-          <div className="search__input">
+          <div className="search__input" ref={suggestNode}>
             <i className="fa-solid fa-magnifying-glass"></i>
             <input
               type="text"
               name="search"
               autoComplete="off"
               placeholder="Nhập tên bài hát, nghệ sĩ hoặc MV..."
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+                setShowSuggest(true);
+              }}
+              onClick={() => setShowSuggest(true)}
             />
+            <div
+              className="close__keyword"
+              style={{ display: `${value !== "" ? "block" : "none"}` }}
+              onClick={() => setValue("")}
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </div>
+            <div
+              className="suggest__search"
+              style={{ display: `${showSuggest ? "block" : "none"}` }}
+            >
+              <span>Gợi ý kết quả</span>
+              <div className="sidebar__scrollbar list__item__all__ft">
+                {searchData &&
+                  keyword &&
+                  searchData.songs &&
+                  searchData.songs.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="list__item__ft item__noactive"
+                      >
+                        <div className="item__list__ft">
+                          <a
+                            className="img__list__ft"
+                            onClick={() => handleOnclick(item)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <img src={item.thumbnail} alt="thumbnail" />
+                            <div
+                              className="option__playlist__selection"
+                              style={{
+                                opacity: `${
+                                  JSON.parse(localStorage.getItem("idSong")) ===
+                                  item.encodeId
+                                    ? "1"
+                                    : "0"
+                                }`,
+                              }}
+                            >
+                              <div className="option__selection">
+                                {!loaderSong &&
+                                checkPlayAudio &&
+                                JSON.parse(localStorage.getItem("idSong")) ===
+                                  item.encodeId ? (
+                                  <span
+                                    className="gif__play"
+                                    style={{
+                                      border: "none",
+                                      width: "10px",
+                                      height: "10px",
+                                    }}
+                                  >
+                                    <img
+                                      src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/icon-playing.gif"
+                                      alt=""
+                                    />
+                                  </span>
+                                ) : loaderSong &&
+                                  JSON.parse(localStorage.getItem("idSong")) ===
+                                    item.encodeId ? (
+                                  <img
+                                    src={loadingGift}
+                                    style={{
+                                      width: "20px",
+                                      height: "20px",
+                                      padding: "8px",
+                                    }}
+                                  />
+                                ) : (
+                                  <i className="fa-solid fa-play"></i>
+                                )}
+                              </div>
+                            </div>
+                          </a>
+                          <div className="subtitle__list__ft">
+                            <div
+                              className="item__title__album"
+                              style={{ cursor: "pointer" }}
+                            >
+                              {item.title}
+                              {item.streamingStatus === 2 && <span>vip</span>}
+                            </div>
+                            <nav className="subsinger__music__library item__title__album1">
+                              {item.artists &&
+                                item.artists.map((artist, index) => {
+                                  return (
+                                    <SingerItem
+                                      key={index}
+                                      artist={artist}
+                                    ></SingerItem>
+                                  );
+                                })}
+                            </nav>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
           </div>
         </div>
         <div className="header__right">

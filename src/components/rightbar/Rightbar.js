@@ -54,7 +54,17 @@ const Rightbar = () => {
                 <div className="right">
                   <div onClick={() => handleOnclick(item)}>
                     <img src={item.thumbnail} />
-                    <div className="option__playlist__selection">
+                    <div
+                      className="option__playlist__selection"
+                      style={{
+                        opacity: `${
+                          JSON.parse(localStorage.getItem("idSong")) ===
+                          item.encodeId
+                            ? "1"
+                            : "0"
+                        }`,
+                      }}
+                    >
                       <div
                         className="option__selection"
                         style={{ cursor: "pointer" }}

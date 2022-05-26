@@ -2,11 +2,12 @@ import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { MvContext } from "../../contexts/MvContextProvider";
 import { HomeContext } from "../../contexts/HomeContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const { setId } = useContext(MvContext);
   const { setLoadPage } = useContext(HomeContext);
-
+  const navigate = useNavigate();
   return (
     <div className="sidebar">
       <div className="navbar">
@@ -15,6 +16,10 @@ const Sidebar = () => {
             <img
               src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/backgrounds/logo-dark.svg"
               alt="logo"
+              onClick={() => {
+                setLoadPage(false);
+                navigate("/");
+              }}
             />
           </span>
         </div>

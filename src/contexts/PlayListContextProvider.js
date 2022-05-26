@@ -13,6 +13,7 @@ const PlayListContextProvider = ({ children }) => {
   const [loaderPlayList, setLoaderPlayList] = useState(true);
   const [checkPlayAudio, setCheckPlayAudio] = useState(false);
   const [checkModalVip, setCheckModalVip] = useState(false);
+  const [checkModalStart, setCheckModalStart] = useState(true);
   const [showRightBar, setShowRightBar] = useState(false);
 
   const getPlayList = async () => {
@@ -53,6 +54,8 @@ const PlayListContextProvider = ({ children }) => {
     setCheckModalVip,
     showRightBar,
     setShowRightBar,
+    checkModalStart,
+    setCheckModalStart,
   };
 
   return (

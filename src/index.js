@@ -7,20 +7,23 @@ import MvContextProvider from "./contexts/MvContextProvider";
 import SongContextProvider from "./contexts/SongContextProvider";
 import PlayListContextProvider from "./contexts/PlayListContextProvider";
 import VideoContextProvider from "./contexts/VideoContextProvider";
+import SearchContextProvider from "./contexts/SearchContextProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
   <HomeContextProvider>
-    <MvContextProvider>
-      <PlayListContextProvider>
-        <SongContextProvider>
-          <VideoContextProvider>
-            <App />
-          </VideoContextProvider>
-        </SongContextProvider>
-      </PlayListContextProvider>
-    </MvContextProvider>
+    <SearchContextProvider>
+      <MvContextProvider>
+        <PlayListContextProvider>
+          <SongContextProvider>
+            <VideoContextProvider>
+              <App />
+            </VideoContextProvider>
+          </SongContextProvider>
+        </PlayListContextProvider>
+      </MvContextProvider>
+    </SearchContextProvider>
   </HomeContextProvider>
   //</React.StrictMode>
 );

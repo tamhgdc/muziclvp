@@ -35,16 +35,17 @@
     padding: 0 20px;
 }
 .modal-center>h3{
-    font-size: 20px;
+    font-size: 25px;
     color: var(--white);
     text-align: center;
 }
 
-.modal-center>p{
+.modal-center>.content__modal>div>p{
     color: rgb(215 194 194 / 60%);
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 20px;
     margin-top: 10px;
+    text-transform: capitalize;
+    font-weight: 600;
 }
 .modal-center>button{
     width: 300px;
@@ -60,4 +61,13 @@
     text-transform: uppercase;
     font-weight: 500;
     color: #482281;
+}
+
+.fix__modal-start{
+    width: 60%;
+    height: 80%;
+}
+.content__modal{
+    display: flex;
+    justify-content: center;
 }

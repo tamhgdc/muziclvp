@@ -5,8 +5,7 @@ import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import loadingGift from "../../assets/images/loading.gif";
 
 const PlayListItem = ({ data }) => {
-  const { setIdSong, setLoaderSong, loaderSong, songUrl } =
-    useContext(SongContext);
+  const { setIdSong, setLoaderSong, loaderSong } = useContext(SongContext);
   const { setCheckPlayAudio, checkPlayAudio, setCheckModalVip } =
     useContext(PlayListContext);
   const params = useParams();
