@@ -52,7 +52,7 @@ const Header = () => {
         localStorage.setItem("idSong", JSON.stringify(item.encodeId));
         setIdSong(item.encodeId);
         setLoaderSong(true);
-        setCheckPlayAudio(!checkPlayAudio);
+        setCheckPlayAudio(true);
       } else {
         setCheckModalVip(true);
       }

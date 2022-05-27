@@ -20,7 +20,7 @@ const PlayListItem = ({ data }) => {
         localStorage.setItem("idSong", JSON.stringify(data.encodeId));
         setIdSong(data.encodeId);
         setLoaderSong(true);
-        setCheckPlayAudio(!checkPlayAudio);
+        setCheckPlayAudio(true);
         setCheckPlayList(true);
       } else {
         setCheckModalVip(true);

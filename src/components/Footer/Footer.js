@@ -212,6 +212,8 @@ const Footer = () => {
     setCheckPlayList(false);
   };
 
+  console.log(checkPlayAudio);
+
   useEffect(() => {
     if (audio && checkPlayAudio) {
       playAudio();
@@ -312,7 +314,6 @@ const Footer = () => {
     } else {
       navigate(infoSong.album.link);
       setIdPlayList(infoSong.album.encodeId);
-      // setCheckPlayList(false)
     }
   };
   return (
