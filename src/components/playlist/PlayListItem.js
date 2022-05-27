@@ -6,8 +6,12 @@ import loadingGift from "../../assets/images/loading.gif";
 
 const PlayListItem = ({ data }) => {
   const { setIdSong, setLoaderSong, loaderSong } = useContext(SongContext);
-  const { setCheckPlayAudio, checkPlayAudio, setCheckModalVip } =
-    useContext(PlayListContext);
+  const {
+    setCheckPlayAudio,
+    checkPlayAudio,
+    setCheckModalVip,
+    setCheckPlayList,
+  } = useContext(PlayListContext);
   const params = useParams();
 
   const handleOnclick = () => {
@@ -17,11 +21,13 @@ const PlayListItem = ({ data }) => {
         setIdSong(data.encodeId);
         setLoaderSong(true);
         setCheckPlayAudio(!checkPlayAudio);
+        setCheckPlayList(true);
       } else {
         setCheckModalVip(true);
       }
     } else {
       setCheckPlayAudio(!checkPlayAudio);
+      setCheckPlayList(true);
     }
   };
 

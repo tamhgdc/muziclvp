@@ -9,7 +9,6 @@ import loadingGift from "../../assets/images/loading.gif";
 const Rightbar = () => {
   const {
     showRightBar,
-    playListData,
     loaderPlayList,
     checkPlayAudio,
     setCheckPlayAudio,
@@ -17,6 +16,7 @@ const Rightbar = () => {
   } = useContext(PlayListContext);
   const { loaderSong, setIdSong, setLoaderSong } = useContext(SongContext);
   const params = useParams();
+  const playListLocal = JSON.parse(localStorage.getItem("playList")) || "";
 
   const handleOnclick = (data) => {
     if (JSON.parse(localStorage.getItem("idSong")) !== data.encodeId) {
@@ -41,8 +41,8 @@ const Rightbar = () => {
         </div>
       </div>
       <div className="sidebar__scrollbar header-center">
-        {!loaderPlayList &&
-          playListData.song.items.map((item, index) => {
+        {playListLocal &&
+          playListLocal.playListSong.map((item, index) => {
             return (
               <div
                 key={index}

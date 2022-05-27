@@ -35,42 +35,44 @@ const Modal = () => {
           <div className="content__modal">
             <div>
               <p>
-                <i class="fa-solid fa-minus"></i> Chức năng Audio(nghe nhạc):
+                <i className="fa-solid fa-minus"></i> Chức năng Audio(nghe
+                nhạc):
                 <br />{" "}
                 <i
-                  class="fa-solid fa-check"
+                  className="fa-solid fa-check"
                   style={{ textIndent: "20px" }}
                 ></i>{" "}
                 play,pause
                 <br />{" "}
                 <i
-                  class="fa-solid fa-check"
+                  className="fa-solid fa-check"
                   style={{ textIndent: "20px" }}
                 ></i>{" "}
                 next,prev trong playList
                 <br />{" "}
                 <i
-                  class="fa-solid fa-check"
+                  className="fa-solid fa-check"
                   style={{ textIndent: "20px" }}
                 ></i>{" "}
                 tua bài hát,cập nhật currentTime
                 <br />{" "}
                 <i
-                  class="fa-solid fa-check"
+                  className="fa-solid fa-check"
                   style={{ textIndent: "20px" }}
                 ></i>{" "}
                 phát ngẫu nhiên ,repeatAll,repeatOne trong playList
                 <br />{" "}
                 <i
-                  class="fa-solid fa-check"
+                  className="fa-solid fa-check"
                   style={{ textIndent: "20px" }}
                 ></i>{" "}
                 điều chỉnh volume, tắt âm, bật âm
-                <br /> <i class="fa-solid fa-minus"></i> Chức năng MV(tương tự
-                chức năng audio)
-                <br /> <i class="fa-solid fa-minus"></i> Chức năng tìm kiếm bài
-                hát
-                <br /> <i class="fa-solid fa-minus"></i> Chức năng xem playList
+                <br /> <i className="fa-solid fa-minus"></i> Chức năng MV(tương
+                tự chức năng audio)
+                <br /> <i className="fa-solid fa-minus"></i> Chức năng tìm kiếm
+                bài hát
+                <br /> <i className="fa-solid fa-minus"></i> Chức năng xem
+                playList
               </p>
             </div>
           </div>

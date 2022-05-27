@@ -5,17 +5,27 @@ import PlayListItem from "../../components/playlist/PlayListItem";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import LoadList from "../../components/playlist/LoadList";
 import { SongContext } from "../../contexts/SongContextProvider";
+import { useParams } from "react-router-dom";
 
 const PlayList = () => {
-  const { playListData, setCheckPlayAudio, checkPlayAudio, loaderPlayList } =
-    useContext(PlayListContext);
+  const {
+    playListData,
+    setCheckPlayAudio,
+    checkPlayAudio,
+    loaderPlayList,
+    setIdPlayList,
+  } = useContext(PlayListContext);
 
   const { loaderSong } = useContext(SongContext);
   const [liked, setLiked] = useState("");
+  const params = useParams();
 
   const changePlayAudio = () => {
     setCheckPlayAudio(!checkPlayAudio);
   };
+  useEffect(() => {
+    setIdPlayList(params.id.split(".")[0]);
+  }, []);
   useEffect(() => {
     if (playListData) {
       let data = String(playListData.like).split("");

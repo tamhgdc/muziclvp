@@ -5,16 +5,13 @@ export const PlayListContext = createContext();
 
 const PlayListContextProvider = ({ children }) => {
   const [playListData, setPlayListData] = useState("");
-  const [idPlayList, setIdPlayList] = useState(
-    JSON.parse(localStorage.getItem("playList"))
-      ? JSON.parse(localStorage.getItem("playList")).encodeId
-      : ""
-  );
+  const [idPlayList, setIdPlayList] = useState("");
   const [loaderPlayList, setLoaderPlayList] = useState(true);
   const [checkPlayAudio, setCheckPlayAudio] = useState(false);
   const [checkModalVip, setCheckModalVip] = useState(false);
   const [checkModalStart, setCheckModalStart] = useState(true);
   const [showRightBar, setShowRightBar] = useState(false);
+  const [checkPlayList, setCheckPlayList] = useState(false);
 
   const getPlayList = async () => {
     await playList(`${idPlayList}`).then((data) => {
@@ -36,12 +33,18 @@ const PlayListContextProvider = ({ children }) => {
       playListData.song.items.forEach((item) => {
         d.push(item);
       });
-      localStorage.setItem(
-        "playList",
-        JSON.stringify({ encodeId: playListData.encodeId, playListSong: d })
-      );
+      if (checkPlayList) {
+        localStorage.setItem(
+          "playList",
+          JSON.stringify({
+            encodeId: playListData.encodeId,
+            url: playListData.link,
+            playListSong: d,
+          })
+        );
+      }
     }
-  }, [playListData]);
+  }, [playListData, checkPlayList]);
 
   const data = {
     idPlayList,
@@ -56,6 +59,7 @@ const PlayListContextProvider = ({ children }) => {
     setShowRightBar,
     checkModalStart,
     setCheckModalStart,
+    setCheckPlayList,
   };
 
   return (

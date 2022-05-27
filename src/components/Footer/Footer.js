@@ -50,8 +50,14 @@ const Footer = () => {
   const navigate = useNavigate();
 
   const { songUrl, infoSong, setIdSong } = useContext(SongContext);
-  const { setCheckPlayAudio, checkPlayAudio, setShowRightBar, showRightBar } =
-    useContext(PlayListContext);
+  const {
+    setCheckPlayAudio,
+    checkPlayAudio,
+    setShowRightBar,
+    showRightBar,
+    setCheckPlayList,
+    setIdPlayList,
+  } = useContext(PlayListContext);
   const { checkChangeVideo } = useContext(VideoContext);
 
   let i = "";
@@ -202,6 +208,7 @@ const Footer = () => {
       pauseAudio();
       setCheckPlayAudio(false);
     }
+    setCheckPlayList(false);
   };
 
   useEffect(() => {
@@ -303,7 +310,10 @@ const Footer = () => {
         <div className="media__left__item">
           <div
             className="media__thumbnail"
-            onClick={() => navigate("/")}
+            onClick={() => {
+              navigate(playListSongLocal.url);
+              setIdPlayList(playListSongLocal.encodeId);
+            }}
             style={{ cursor: "pointer" }}
           >
             <div className="thumbnail">
@@ -317,7 +327,6 @@ const Footer = () => {
                 return a.name;
               })}
             </div>
-            s
           </div>
           <div className="options__left">
             <div className="media__heart">
