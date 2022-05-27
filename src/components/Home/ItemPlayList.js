@@ -4,11 +4,14 @@ import SingerItem from "./SingerItem";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 
 const ItemPlayList = ({ playList, checkTitle }) => {
-  const { setIdPlayList, idPlayList, checkPlayAudio } =
+  const { setIdPlayList, setCheckSearch, checkPlayAudio, setCheckPlayList } =
     useContext(PlayListContext);
+  const playListLocal = JSON.parse(localStorage.getItem("playList")) || "";
 
   const handlePlaylist = () => {
     setIdPlayList(playList.encodeId);
+    setCheckSearch(false);
+    setCheckPlayList(false);
   };
   return (
     <div className="item__playlist__selection">
@@ -19,7 +22,9 @@ const ItemPlayList = ({ playList, checkTitle }) => {
             className="option__playlist__selection"
             style={{
               opacity: `${
-                playList.encodeId === idPlayList && checkPlayAudio ? "1" : ""
+                playListLocal && playList.encodeId === playListLocal.encodeId
+                  ? "1"
+                  : ""
               }`,
             }}
           >
@@ -27,7 +32,9 @@ const ItemPlayList = ({ playList, checkTitle }) => {
               <i className="fa-regular fa-heart"></i>
             </div>
             <div className="option__selection item__play__selection">
-              {playList.encodeId === idPlayList && checkPlayAudio ? (
+              {playListLocal &&
+              playList.encodeId === playListLocal.encodeId &&
+              checkPlayAudio ? (
                 <span className="gif__play">
                   <img
                     src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/icon-playing.gif"

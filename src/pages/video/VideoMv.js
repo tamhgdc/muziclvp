@@ -271,7 +271,11 @@ const VideoMv = ({ recommends }) => {
     >
       <video
         className="video"
-        src={urlVideo ? urlVideo : dataVideo?.streaming.mp4["720p"]}
+        src={
+          urlVideo
+            ? urlVideo
+            : dataVideo.streaming.mp4["720p"] && dataVideo.streaming.mp4["480p"]
+        }
         ref={Ref}
         onClick={handleTimeoutPlay}
       ></video>

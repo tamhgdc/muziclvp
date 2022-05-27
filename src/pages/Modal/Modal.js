@@ -31,7 +31,7 @@ const Modal = () => {
           onClick={() => setCheckModalVip(false)}
         ></i>
         <div className="modal-center" ref={Ref}>
-          <h3>Dành Cho Tài Khoản VIP</h3>
+          <h3 style={{ fontSize: "20px" }}>Dành Cho Tài Khoản VIP</h3>
           <p>
             Theo yêu cầu của đơn vị sở hữu bản quyền, bạn cần tài khoản VIP để
             nghe bài hát này.

@@ -5,6 +5,7 @@ import SingerItem from "../../components/Home/SingerItem";
 import loadingGift from "../../assets/images/loading.gif";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import { SongContext } from "../../contexts/SongContextProvider";
+import { useNavigate } from "react-router-dom";
 
 let useClickOutSide = (handler) => {
   let domNode = useRef();
@@ -33,10 +34,18 @@ const Header = () => {
   const [showSuggest, setShowSuggest] = useState(false);
   const [value, setValue] = useState("");
 
-  const { searchData, setKeyWord, keyword } = useContext(SearchContext);
-  const { setIdSong, setLoaderSong, loaderSong } = useContext(SongContext);
-  const { setCheckPlayAudio, checkPlayAudio, setCheckModalVip } =
-    useContext(PlayListContext);
+  const { searchData, setKeyWord, keyword, setLoaderData } =
+    useContext(SearchContext);
+  const { setIdSong, setLoaderSong, loaderSong, infoSong } =
+    useContext(SongContext);
+  const {
+    setCheckPlayAudio,
+    checkPlayAudio,
+    setCheckModalVip,
+    setCheckSearch,
+    checkSearch,
+  } = useContext(PlayListContext);
+  const navigate = useNavigate();
   const handleOnclick = (item) => {
     if (JSON.parse(localStorage.getItem("idSong")) !== item.encodeId) {
       if (item.streamingStatus !== 2) {
@@ -50,7 +59,21 @@ const Header = () => {
     } else {
       setCheckPlayAudio(!checkPlayAudio);
     }
+    setCheckSearch(true);
   };
+
+  useEffect(() => {
+    if (infoSong && checkSearch) {
+      localStorage.setItem(
+        "playList",
+        JSON.stringify({
+          encodeId: infoSong.album.encodeId,
+          url: infoSong.album.link,
+          playListSong: [{ ...infoSong }],
+        })
+      );
+    }
+  }, [infoSong, checkSearch]);
 
   useEffect(() => {
     let searchTimeOut;
@@ -94,6 +117,13 @@ const Header = () => {
               onChange={(e) => {
                 setValue(e.target.value);
                 setShowSuggest(true);
+              }}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  navigate(`/tim-kiem/${value}`);
+                  setLoaderData(true);
+                  setShowSuggest(false);
+                }
               }}
               onClick={() => setShowSuggest(true)}
             />

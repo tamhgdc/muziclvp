@@ -71,3 +71,9 @@
     display: flex;
     justify-content: center;
 }
+.modal-center>p{
+    font-size: 16px;
+    color: rgb(255 247 247 / 60%);
+    text-align: center;
+    margin-top: 10px;
+}

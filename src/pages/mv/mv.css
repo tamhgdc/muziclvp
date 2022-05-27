@@ -22,7 +22,7 @@
     
 }
 .active__check > .active {
-    padding-bottom: 10px;
+    padding-bottom: 12px;
     border-bottom: 2px solid var(--link-text-hover);
   }
 .navbar__mv > ul > li{

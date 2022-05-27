@@ -9,12 +9,13 @@ import loadingGift from "../../assets/images/loading.gif";
 const Rightbar = () => {
   const {
     showRightBar,
-    loaderPlayList,
     checkPlayAudio,
     setCheckPlayAudio,
     setCheckModalVip,
+    checkSearch,
   } = useContext(PlayListContext);
-  const { loaderSong, setIdSong, setLoaderSong } = useContext(SongContext);
+  const { loaderSong, setIdSong, setLoaderSong, infoSong } =
+    useContext(SongContext);
   const params = useParams();
   const playListLocal = JSON.parse(localStorage.getItem("playList")) || "";
 
@@ -32,7 +33,6 @@ const Rightbar = () => {
       setCheckPlayAudio(!checkPlayAudio);
     }
   };
-
   return (
     <div className={`rightbar ${showRightBar && "show__rightbar"}`}>
       <div className="header-rightbar">
@@ -41,7 +41,8 @@ const Rightbar = () => {
         </div>
       </div>
       <div className="sidebar__scrollbar header-center">
-        {playListLocal &&
+        {!checkSearch ? (
+          playListLocal &&
           playListLocal.playListSong.map((item, index) => {
             return (
               <div
@@ -116,7 +117,79 @@ const Rightbar = () => {
                 <div className="center"></div>
               </div>
             );
-          })}
+          })
+        ) : (
+          <div
+            className={`rightbar__playlist ${
+              JSON.parse(localStorage.getItem("idSong")) ===
+                infoSong.encodeId && "active__rightbar__item"
+            }`}
+          >
+            <div className="right">
+              <div onClick={() => handleOnclick(infoSong)}>
+                <img src={infoSong.thumbnail} />
+                <div
+                  className="option__playlist__selection"
+                  style={{
+                    opacity: `${
+                      JSON.parse(localStorage.getItem("idSong")) ===
+                      infoSong.encodeId
+                        ? "1"
+                        : "0"
+                    }`,
+                  }}
+                >
+                  <div
+                    className="option__selection"
+                    style={{ cursor: "pointer" }}
+                  >
+                    {!loaderSong &&
+                    checkPlayAudio &&
+                    JSON.parse(localStorage.getItem("idSong")) ===
+                      infoSong.encodeId ? (
+                      <span
+                        className="gif__play"
+                        style={{
+                          border: "none",
+                          width: "10px",
+                          height: "10px",
+                        }}
+                      >
+                        <img
+                          src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/icon-playing.gif"
+                          alt=""
+                        />
+                      </span>
+                    ) : loaderSong &&
+                      JSON.parse(localStorage.getItem("idSong")) ===
+                        infoSong.encodeId ? (
+                      <img
+                        src={loadingGift}
+                        style={{
+                          width: "20px",
+                          height: "20px",
+                          padding: "8px",
+                        }}
+                      />
+                    ) : (
+                      <i className="fa-solid fa-play"></i>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="item__title__album title__rightbar">
+                <p>{infoSong.title}</p>
+                <div className="singer__rightbar">
+                  {infoSong.artists &&
+                    infoSong.artists.map((a, index) => {
+                      return <SingerItem key={index} artist={a} />;
+                    })}
+                </div>
+              </div>
+            </div>
+            <div className="center"></div>
+          </div>
+        )}
       </div>
     </div>
   );

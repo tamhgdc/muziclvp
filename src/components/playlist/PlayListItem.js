@@ -87,9 +87,8 @@ const PlayListItem = ({ data }) => {
             <div className="item__title__album">
               {data.title ? data.title : ""}
 
-              {(params.playlist !== "album" || data.streamingStatus === 2) && (
-                <span>vip</span>
-              )}
+              {((params.playlist && params.playlist !== "album") ||
+                data.streamingStatus === 2) && <span>vip</span>}
             </div>
             <nav className="subsinger__music__library item__title__album1">
               {data.artists &&

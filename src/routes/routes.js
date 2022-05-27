@@ -15,6 +15,7 @@ import MvPersonal from "../components/personal/MvPersonal";
 import MvItem from "../components/mv/MvItem";
 import PlayList from "../pages/Album/PlayList";
 import Video from "../pages/video/Video";
+import ResultSearchData from "../components/Header/ResultSearchData";
 
 const routes = ({ el }) => {
   return (
@@ -39,6 +40,7 @@ const routes = ({ el }) => {
         <Route path="/top100" element={<Top100 />} />
         <Route path={`/video-clip/:slug/:id`} element={<Video />} />
         <Route path={`/:playlist/:slug/:id`} element={<PlayList />} />
+        <Route path={`/tim-kiem/:keyword`} element={<ResultSearchData />} />
       </Routes>
       {el}
     </Router>

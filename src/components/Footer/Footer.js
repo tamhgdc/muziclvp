@@ -57,6 +57,7 @@ const Footer = () => {
     showRightBar,
     setCheckPlayList,
     setIdPlayList,
+    checkSearch,
   } = useContext(PlayListContext);
   const { checkChangeVideo } = useContext(VideoContext);
 
@@ -303,6 +304,17 @@ const Footer = () => {
     }
     playAudio();
   };
+
+  const changePage = () => {
+    if (!checkSearch) {
+      navigate(playListSongLocal.url);
+      setIdPlayList(playListSongLocal.encodeId);
+    } else {
+      navigate(infoSong.album.link);
+      setIdPlayList(infoSong.album.encodeId);
+      // setCheckPlayList(false)
+    }
+  };
   return (
     <div className="footer">
       <audio src={songUrl} ref={newRef}></audio>
@@ -310,10 +322,7 @@ const Footer = () => {
         <div className="media__left__item">
           <div
             className="media__thumbnail"
-            onClick={() => {
-              navigate(playListSongLocal.url);
-              setIdPlayList(playListSongLocal.encodeId);
-            }}
+            onClick={changePage}
             style={{ cursor: "pointer" }}
           >
             <div className="thumbnail">

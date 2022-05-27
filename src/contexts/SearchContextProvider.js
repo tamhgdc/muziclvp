@@ -6,6 +6,8 @@ export const SearchContext = createContext();
 const SearchContextProvider = ({ children }) => {
   const [keyword, setKeyWord] = useState("");
   const [searchData, setSearchData] = useState("");
+  const [loaderData, setLoaderData] = useState(true);
+
   const getSearch = async () => {
     return await searchSong(keyword).then((data) => {
       setSearchData(data.data.data);
@@ -22,6 +24,8 @@ const SearchContextProvider = ({ children }) => {
     searchData,
     setKeyWord,
     keyword,
+    loaderData,
+    setLoaderData,
   };
 
   return (
