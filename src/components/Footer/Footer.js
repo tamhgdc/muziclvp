@@ -291,7 +291,7 @@ const Footer = () => {
         length = data.length;
 
         if (i !== "") {
-          if (i - 1 === 0) {
+          if (i === 0) {
             i = length - 1;
           } else {
             i = i - 1;

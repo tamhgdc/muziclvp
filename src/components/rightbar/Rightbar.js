@@ -5,7 +5,6 @@ import SingerItem from "../../components/Home/SingerItem";
 import { SongContext } from "../../contexts/SongContextProvider";
 import { useParams } from "react-router-dom";
 import loadingGift from "../../assets/images/loading.gif";
-import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const Rightbar = () => {
   const {
@@ -27,7 +26,7 @@ const Rightbar = () => {
         localStorage.setItem("idSong", JSON.stringify(data.encodeId));
         setIdSong(data.encodeId);
         setLoaderSong(true);
-        setCheckPlayAudio(!checkPlayAudio);
+        setCheckPlayAudio(true);
       } else {
         setCheckModalVip(true);
       }
