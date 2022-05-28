@@ -314,8 +314,12 @@ const Footer = () => {
       setIdPlayList(infoSong.album.encodeId);
     }
   };
+
   return (
-    <div className="footer">
+    <div
+      className="footer"
+      style={{ display: `${checkChangeVideo ? "none" : "flex"}` }}
+    >
       <audio src={songUrl} ref={newRef}></audio>
       <div className="media__left">
         <div className="media__left__item">

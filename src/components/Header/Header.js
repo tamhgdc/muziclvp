@@ -6,6 +6,7 @@ import loadingGift from "../../assets/images/loading.gif";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import { SongContext } from "../../contexts/SongContextProvider";
 import { useNavigate } from "react-router-dom";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 let useClickOutSide = (handler) => {
   let domNode = useRef();
@@ -38,6 +39,8 @@ const Header = () => {
     useContext(SearchContext);
   const { setIdSong, setLoaderSong, loaderSong, infoSong } =
     useContext(SongContext);
+  const { setCheckChangeVideo, setIdVideo, setCheckMiniVideo } =
+    useContext(VideoContext);
   const {
     setCheckPlayAudio,
     checkPlayAudio,
@@ -60,6 +63,9 @@ const Header = () => {
       setCheckPlayAudio(!checkPlayAudio);
     }
     setCheckSearch(true);
+    setCheckChangeVideo(false);
+    setCheckMiniVideo(false);
+    setIdVideo("");
   };
 
   useEffect(() => {

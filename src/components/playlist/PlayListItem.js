@@ -3,6 +3,7 @@ import { SongContext } from "../../contexts/SongContextProvider";
 import { useParams } from "react-router-dom";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import loadingGift from "../../assets/images/loading.gif";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const PlayListItem = ({ data }) => {
   const { setIdSong, setLoaderSong, loaderSong } = useContext(SongContext);
@@ -12,6 +13,10 @@ const PlayListItem = ({ data }) => {
     setCheckModalVip,
     setCheckPlayList,
   } = useContext(PlayListContext);
+
+  const { setIdVideo, setCheckMiniVideo, setCheckChangeVideo } =
+    useContext(VideoContext);
+
   const params = useParams();
 
   const handleOnclick = () => {
@@ -29,6 +34,9 @@ const PlayListItem = ({ data }) => {
       setCheckPlayAudio(!checkPlayAudio);
       setCheckPlayList(true);
     }
+    setCheckChangeVideo(false);
+    setCheckMiniVideo(false);
+    setIdVideo("");
   };
 
   return (

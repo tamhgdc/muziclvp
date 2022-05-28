@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import loadingGift from "../../assets/images/loading.gif";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const FooterLoader = () => {
+  const { checkChangeVideo, setCheckChangeVideo } = useContext(VideoContext);
+
+  useEffect(() => {
+    setCheckChangeVideo(true);
+  }, []);
+
   return (
-    <div className="footer">
+    <div
+      className="footer"
+      style={{ display: `${checkChangeVideo ? "none" : "flex"}` }}
+    >
       <audio></audio>
       <div className="media__left">
         <div className="media__left__item">

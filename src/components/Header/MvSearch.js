@@ -5,8 +5,12 @@ import { VideoContext } from "../../contexts/VideoContextProvider";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 
 const MvSearch = ({ playList }) => {
-  const { setIdVideo, setCheckRenderList, setCheckChangeVideo } =
-    useContext(VideoContext);
+  const {
+    setIdVideo,
+    setCheckRenderList,
+    setCheckChangeVideo,
+    setCheckMiniVideo,
+  } = useContext(VideoContext);
   const { setCheckModalVip } = useContext(PlayListContext);
   const navigate = useNavigate();
 
@@ -14,7 +18,6 @@ const MvSearch = ({ playList }) => {
     if (item.streaming) {
       navigate(item.link);
       setIdVideo(item.encodeId);
-      localStorage.setItem("idVideo", JSON.stringify(item.encodeId));
       setCheckRenderList(true);
       setCheckChangeVideo(true);
     } else {
