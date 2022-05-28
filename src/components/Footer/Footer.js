@@ -212,8 +212,6 @@ const Footer = () => {
     setCheckPlayList(false);
   };
 
-  console.log(checkPlayAudio);
-
   useEffect(() => {
     if (audio && checkPlayAudio) {
       playAudio();

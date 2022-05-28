@@ -19,7 +19,7 @@ const useQuality = (value) => {
   return qualityRef;
 };
 
-const VideoMv = ({ recommends }) => {
+const VideoMv = () => {
   const {
     dataVideo,
     setIdVideo,
@@ -31,10 +31,17 @@ const VideoMv = ({ recommends }) => {
     setRepeatVideo,
     setCheckZoom,
     checkZoom,
+    recommends,
+    convertMS,
+    setCurrentTimeShared,
+    currentTimeShared,
+    checkMiniVideo,
+    setCurrentSound,
   } = useContext(VideoContext);
   const [isPlay, setIsPlay] = useState(false);
   const [isPlayTimeOut, setIsPlayTimeOut] = useState(false);
   const [video, setVideo] = useState("");
+  const [hiddenTolltip, setHiddenTolltip] = useState(true);
   //xử lý volume
   const [activeSound, setActiveSound] = useState(false);
   const [widthSound, setWidthSound] = useState("0");
@@ -52,25 +59,10 @@ const VideoMv = ({ recommends }) => {
   const qualityRef = useQuality(setSetting);
   const navigate = useNavigate();
 
+  let timeOut;
   let length;
   let i;
-
-  //conver time
-  const convertMS = (value) => {
-    const sec = parseInt(value, 10); // convert value to number if it's string
-    let hours = Math.floor(sec / 3600); // get hours
-    let minutes = Math.floor((sec - hours * 3600) / 60); // get minutes
-    let seconds = sec - hours * 3600 - minutes * 60; //  get seconds
-    // add 0 if value < 10; Example: 2 => 02
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-
-      if (seconds < 10) {
-        seconds = "0" + seconds;
-      }
-      return minutes + ":" + seconds; // Return is HH : MM : SS
-    }
-  };
+  let canListen = [];
 
   //hanlde Video
 
@@ -94,7 +86,16 @@ const VideoMv = ({ recommends }) => {
     if (video && autoVideo) {
       playVideo();
       setIsPlay(true);
+      timeOut = setTimeout(() => {
+        setHiddenTolltip(false);
+      }, 5000);
+      if (!checkMiniVideo) {
+        video.currentTime = currentTimeShared;
+        setCurrentTime(currentTimeShared);
+        setActiveSound(true);
+      }
     }
+    return () => clearTimeout(timeOut);
   }, [video, autoVideo]);
 
   // Play & pause video
@@ -103,11 +104,17 @@ const VideoMv = ({ recommends }) => {
     updateOnTime();
     setIsPlay(true);
     onEnded();
+    timeOut = setTimeout(() => {
+      setHiddenTolltip(false);
+    }, 2000);
+    return () => clearTimeout(timeOut);
   };
   const pauseVideo = () => {
     video.pause();
     updateOnTime();
     setIsPlay(false);
+    clearTimeout(timeOut);
+    setHiddenTolltip(true);
   };
 
   //update Video
@@ -115,6 +122,7 @@ const VideoMv = ({ recommends }) => {
     video.ontimeupdate = () => {
       setCurrentTime(convertMS(video.currentTime));
       setSaveCurrentTime(video.currentTime);
+      setCurrentTimeShared(video.currentTime);
       if (video.duration) {
         let percent = (video.currentTime / video.duration) * 100;
         setWidthVideo(percent);
@@ -198,12 +206,17 @@ const VideoMv = ({ recommends }) => {
   // next & prev
 
   const getIndex = () => {
-    recommends.find((item, index) => {
+    recommends.forEach((recommend) => {
+      if (recommend.streamingStatus === 1) {
+        canListen.push(recommend);
+      }
+    });
+    canListen.find((item, index) => {
       if (item.encodeId === idVideo) {
         i = index;
       }
     });
-    length = recommends.length;
+    length = canListen.length;
   };
 
   const nextVideo = () => {
@@ -213,8 +226,8 @@ const VideoMv = ({ recommends }) => {
     } else {
       i = i + 1;
     }
-    setIdVideo(recommends[i].encodeId);
-    navigate(recommends[i].link);
+    setIdVideo(canListen[i].encodeId);
+    navigate(canListen[i].link);
   };
 
   const prevVideo = () => {
@@ -224,8 +237,8 @@ const VideoMv = ({ recommends }) => {
     } else {
       i = i - 1;
     }
-    setIdVideo(recommends[i].encodeId);
-    navigate(recommends[i].link);
+    setIdVideo(canListen[i].encodeId);
+    navigate(canListen[i].link);
   };
 
   //volume
@@ -240,11 +253,14 @@ const VideoMv = ({ recommends }) => {
         setWidthSound("100");
         video.volume = 1;
         video.muted = false;
+        setCurrentSound("100");
         if (saveSound) {
           setWidthSound(saveSound);
+          setCurrentSound(saveSound / 100);
           video.volume = saveSound / 100;
         }
       } else {
+        setCurrentSound("0");
         setWidthSound("0");
         video.muted = true;
         video.volume = 0;
@@ -258,6 +274,7 @@ const VideoMv = ({ recommends }) => {
       setWidthSound(e.target.value);
       setSaveSound(e.target.value);
       video.volume = e.target.value / 100;
+      setCurrentSound(e.target.value / 100);
       setActiveSound(true);
     } else {
       setActiveSound(false);
@@ -293,7 +310,7 @@ const VideoMv = ({ recommends }) => {
           )}
         </div>
       </div>
-      <div className="line__video">
+      <div className={`line__video ${!hiddenTolltip ? "tolltip" : ""}`}>
         <div className="media__duration__bar media__video">
           <input
             className="current__time__video"
@@ -313,7 +330,7 @@ const VideoMv = ({ recommends }) => {
           </div>
         </div>
       </div>
-      <div className="controls__menu">
+      <div className={`controls__menu ${!hiddenTolltip ? "tolltip" : ""}`}>
         <div className="controls__video">
           <div className="controls__video__left">
             <div className="controls__item__video" onClick={prevVideo}>

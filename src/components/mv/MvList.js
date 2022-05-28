@@ -4,15 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const MvList = ({ playList }) => {
-  const { setIdVideo, setCheckRenderList, setCheckChangeVideo } =
+  const { setIdVideo, setCheckChangeVideo, checkMiniVideo, idVideo } =
     useContext(VideoContext);
   const navigate = useNavigate();
 
   const handleClickVideo = (item) => {
-    navigate(item.link);
+    !checkMiniVideo && navigate(item.link);
     setIdVideo(item.encodeId);
-    localStorage.setItem("idVideo", JSON.stringify(item.encodeId));
-    setCheckRenderList(true);
     setCheckChangeVideo(true);
   };
 
@@ -22,10 +20,15 @@ const MvList = ({ playList }) => {
         return (
           <div key={index} className="column__mv mt-20">
             <div onClick={() => handleClickVideo(item)}>
-              <div className="image__mv">
+              <div
+                className={`image__mv ${
+                  idVideo === item.encodeId ? "active__video__" : ""
+                }`}
+              >
                 <img src={item.thumbnail} alt="" />
-                <span className="controller__itemmedia play__item">
+                <span className={`controller__itemmedia play__item `}>
                   <i className="far fa-play-circle"></i>
+                  <p>Đang phát</p>
                 </span>
               </div>
             </div>

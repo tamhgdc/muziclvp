@@ -3,8 +3,10 @@ import "./video.css";
 import { VideoContext } from "../../contexts/VideoContextProvider";
 import SingerItem from "../../components/Home/SingerItem";
 import VideoList from "../../components/video/VideoList";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import VideoMv from "./VideoMv";
+import { PlayListContext } from "../../contexts/PlayListContextProvider";
+import ModalVideoVip from "../../pages/Modal/ModalVideoVip";
 
 const Video = () => {
   const {
@@ -19,10 +21,15 @@ const Video = () => {
     idVideo,
     setIdVideo,
     setCheckRenderList,
+    recommends,
+    setReCommends,
+    setCheckMiniVideo,
   } = useContext(VideoContext);
-  const [recommends, setReCommends] = useState("");
+  const { checkModalVideoVip, setCheckModalVideoVip } =
+    useContext(PlayListContext);
 
   const navigate = useNavigate();
+  const params = useParams();
   //bật tắt route video
   const changeRoute = () => {
     navigate("/the-loai-video");
@@ -34,6 +41,7 @@ const Video = () => {
 
   useEffect(() => {
     setCheckRenderList(true);
+    setIdVideo(params.id.split(".")[0]);
   }, []);
 
   useEffect(() => {
@@ -43,13 +51,17 @@ const Video = () => {
   }, [checkRenderList]);
 
   const handleVideo = (item) => {
-    navigate(item.link);
-    setIdVideo(item.encodeId);
-    localStorage.setItem("idVideo", JSON.stringify(item.encodeId));
+    if (item.streamingStatus !== 2) {
+      navigate(item.link);
+      setIdVideo(item.encodeId);
+    } else {
+      setCheckModalVideoVip(true);
+    }
   };
 
   return (
     <div className="sidebar__scrollbar container-video">
+      {checkModalVideoVip && <ModalVideoVip />}
       <div className="header__video">
         <div className="header__video__left">
           {!loaderVideo && (
@@ -82,7 +94,13 @@ const Video = () => {
           </div>
         </div>
         <div className="header__video__right">
-          <div className="menu__click__">
+          <div
+            className="menu__click__"
+            onClick={() => {
+              setCheckMiniVideo(true);
+              navigate("/the-loai-video");
+            }}
+          >
             <i className="fa fa-compress" aria-hidden="true"></i>
           </div>
           <div
@@ -95,11 +113,7 @@ const Video = () => {
         </div>
       </div>
       <div className="video__all__playlist">
-        {loaderVideo ? (
-          <div className="video__container"></div>
-        ) : (
-          <VideoMv recommends={recommends} />
-        )}
+        {loaderVideo ? <div className="video__container"></div> : <VideoMv />}
         {/* ấ */}
         <div
           className="list__video"
@@ -163,6 +177,9 @@ const Video = () => {
                         }`}
                       >
                         <img src={item.thumbnail} alt="" />
+                        {item.streamingStatus === 2 && (
+                          <div className="mv__video--vip">Vip</div>
+                        )}
                         <div className="option__image">
                           <i
                             className="fa-solid fa-play"

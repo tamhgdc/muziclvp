@@ -9,10 +9,11 @@ const PlayListContextProvider = ({ children }) => {
   const [loaderPlayList, setLoaderPlayList] = useState(true);
   const [checkPlayAudio, setCheckPlayAudio] = useState(false);
   const [checkModalVip, setCheckModalVip] = useState(false);
-  const [checkModalStart, setCheckModalStart] = useState(true);
+  const [checkModalStart, setCheckModalStart] = useState(false);
   const [showRightBar, setShowRightBar] = useState(false);
   const [checkPlayList, setCheckPlayList] = useState(false);
   const [checkSearch, setCheckSearch] = useState(false);
+  const [checkModalVideoVip, setCheckModalVideoVip] = useState(false);
 
   const getPlayList = async () => {
     await playList(`${idPlayList}`).then((data) => {
@@ -63,6 +64,8 @@ const PlayListContextProvider = ({ children }) => {
     setCheckPlayList,
     setCheckSearch,
     checkSearch,
+    setCheckModalVideoVip,
+    checkModalVideoVip,
   };
 
   return (

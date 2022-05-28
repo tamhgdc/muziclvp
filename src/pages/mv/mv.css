@@ -238,3 +238,21 @@
 .mr-20{
     margin-right: 20px;
 }
+.image__mv > .play__item >p{
+    display: none;
+}
+.active__video__>img{
+    opacity: 0.4;
+    transform: none;
+}
+
+.active__video__>.play__item{
+    display: block;
+}
+.active__video__ >.play__item>i{
+    display: none;
+}
+.active__video__ >.play__item>p{
+    display: block;
+    opacity: 1;
+}

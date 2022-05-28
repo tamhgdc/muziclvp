@@ -52,7 +52,9 @@ const MvSearch = ({ playList }) => {
                   </div>
                 </div>
               </div>
-              {!item.streaming && <div className="video__vip">Vip</div>}
+              {item.streamingStatus === 2 && (
+                <div className="video__vip">Vip</div>
+              )}
             </div>
           );
         }

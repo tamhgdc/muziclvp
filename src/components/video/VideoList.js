@@ -2,14 +2,19 @@ import React, { useContext } from "react";
 import SingerItem from "../Home/SingerItem";
 import { VideoContext } from "../../contexts/VideoContextProvider";
 import { useNavigate } from "react-router-dom";
+import { PlayListContext } from "../../contexts/PlayListContextProvider";
 
 const VideoList = ({ data }) => {
   const { setIdVideo, idVideo } = useContext(VideoContext);
+  const { setCheckModalVideoVip } = useContext(PlayListContext);
   const navigate = useNavigate();
   const handleVideo = (item) => {
-    navigate(item.link);
-    setIdVideo(item.encodeId);
-    localStorage.setItem("idVideo", JSON.stringify(item.encodeId));
+    if (item.streamingStatus !== 2) {
+      navigate(item.link);
+      setIdVideo(item.encodeId);
+    } else {
+      setCheckModalVideoVip(true);
+    }
   };
 
   return (
@@ -21,6 +26,10 @@ const VideoList = ({ data }) => {
     >
       <div className="image__video">
         <img src={data.thumbnail} alt="" />
+        {data.streamingStatus === 2 && (
+          <div className="mv__video--vip">Vip</div>
+        )}
+
         <div className="option__video">
           <i
             className="fa-solid fa-play"

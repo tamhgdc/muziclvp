@@ -736,6 +736,7 @@
     cursor: pointer;
 }
 
+
 .controller__itemmedia>i:hover {
     background-color: var(--kara-btn-bg);
 }
@@ -748,6 +749,11 @@
   .play__item > i:hover {
     background-color: unset;
     color: var(--main-text-stroke);
+  }
+  .play__item>p{
+      font-size: 16px;
+      color: white;
+      font-weight: 500;
   }
   
   .none__btn {
@@ -852,7 +858,6 @@
     color: var(--spotlight-item);
     border-radius: 50px;
     cursor: pointer;
-    transition: 0.5s;
 }
 
 .mv__item {
@@ -1372,5 +1377,5 @@ a{
     border-radius: 5px;
 }
 .list__item__ft:hover > .item__list__ft > .img__list__ft > .option__playlist__selection {
-    opacity: 1;
+    opacity: 1 !important;
 }

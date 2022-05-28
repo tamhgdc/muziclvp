@@ -17,7 +17,7 @@ import PlayList from "../pages/Album/PlayList";
 import Video from "../pages/video/Video";
 import ResultSearchData from "../components/Header/ResultSearchData";
 
-const routes = ({ el }) => {
+const routes = ({ el, miniVideo }) => {
   return (
     <Router>
       <Routes>
@@ -43,6 +43,7 @@ const routes = ({ el }) => {
         <Route path={`/tim-kiem/:keyword`} element={<ResultSearchData />} />
       </Routes>
       {el}
+      {miniVideo}
     </Router>
   );
 };

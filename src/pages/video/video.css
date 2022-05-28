@@ -91,6 +91,7 @@
     border-radius: 5px;
     overflow: hidden;
     background-color: black;
+    
 }
 .list__video{
     width: 300px;
@@ -274,6 +275,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex: 1;
 }
 
 .name__song,.video__singer{
@@ -517,4 +519,20 @@
 .active__anny>.option__image>p{
     display: block;
     opacity: 1 !important;
+}
+
+.tolltip{
+    visibility: hidden;
+    transition: 0.8s;
+}
+.video__container:hover .tolltip{
+    visibility: visible !important;
+}
+.mv__video--vip{
+    position: absolute;
+    top: 10px;
+    background-color: yellow;
+    padding: 1px 10px;
+    left: 5px;
+    border-radius: 5px;
 }

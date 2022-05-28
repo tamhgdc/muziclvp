@@ -83,7 +83,9 @@ const ResultSearchData = () => {
           <div className="rightbar__playlist search__top">
             <div className="right fix__search" onClick={handleOnclick}>
               <div>
-                <img src={dataSearch && dataSearch.top.thumbnail} />
+                <img
+                  src={dataSearch && dataSearch.top && dataSearch.top.thumbnail}
+                />
                 <div className="option__playlist__selection">
                   <div
                     className="option__selection"
@@ -91,6 +93,7 @@ const ResultSearchData = () => {
                   >
                     {!loaderSong &&
                     dataSearch &&
+                    dataSearch.top &&
                     checkPlayAudio &&
                     JSON.parse(localStorage.getItem("idSong")) ===
                       dataSearch.top.encodeId ? (
@@ -109,6 +112,7 @@ const ResultSearchData = () => {
                       </span>
                     ) : loaderSong &&
                       dataSearch &&
+                      dataSearch.top &&
                       JSON.parse(localStorage.getItem("idSong")) ===
                         dataSearch.top.encodeId ? (
                       <img
@@ -127,9 +131,10 @@ const ResultSearchData = () => {
               </div>
               <div className="item__title__album title__rightbar search__title">
                 <div>
-                  <p>{dataSearch && dataSearch.top.title}</p>
+                  <p>{dataSearch && dataSearch.top && dataSearch.top.title}</p>
                   <div className="singer__rightbar">
                     {dataSearch &&
+                      dataSearch.top &&
                       dataSearch.top.artists &&
                       dataSearch.top.artists.map((a, index) => {
                         return <SingerItem key={index} artist={a} />;
@@ -182,6 +187,7 @@ const ResultSearchData = () => {
             </li>
             <div className="list__playlist__selection">
               {dataSearch &&
+                dataSearch.playlists &&
                 dataSearch.playlists.map((item, index) => {
                   if (index < 5)
                     return <ItemPlayList playList={item} key={index} />;
@@ -203,7 +209,9 @@ const ResultSearchData = () => {
                 </a>
               </div>
             </li>
-            {dataSearch && <MvSearch playList={dataSearch.videos} />}
+            {dataSearch && dataSearch.videos && (
+              <MvSearch playList={dataSearch.videos} />
+            )}
           </ul>
         </div>
       )}
