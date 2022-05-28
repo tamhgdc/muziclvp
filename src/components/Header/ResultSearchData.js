@@ -13,6 +13,7 @@ import ItemPlayList from "../Home/ItemPlayList";
 import searchSong from "../../apis/search.api";
 import ResultSearchLoader from "./ResultSearchLoader";
 import { SearchContext } from "../../contexts/SearchContextProvider";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const ResultSearchData = () => {
   const [dataSearch, setDataSearch] = useState("");
@@ -20,6 +21,8 @@ const ResultSearchData = () => {
   const { checkPlayAudio, setCheckPlayAudio, setCheckModalVip } =
     useContext(PlayListContext);
   const { loaderSong, setIdSong, setLoaderSong } = useContext(SongContext);
+  const { setIdVideo, setCheckMiniVideo, setCheckChangeVideo } =
+    useContext(VideoContext);
   const params = useParams();
 
   const handleOnclick = (data) => {
@@ -35,6 +38,9 @@ const ResultSearchData = () => {
     } else {
       setCheckPlayAudio(!checkPlayAudio);
     }
+    setCheckChangeVideo(false);
+    setCheckMiniVideo(false);
+    setIdVideo("");
   };
   const getSearch = async () => {
     return await searchSong(params.keyword).then((data) => {

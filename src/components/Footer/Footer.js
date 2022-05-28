@@ -182,10 +182,10 @@ const Footer = () => {
   };
 
   useEffect(() => {
-    if (checkChangeVideo) {
+    if (audio && checkChangeVideo) {
       pauseAudio();
     }
-  }, [checkChangeVideo]);
+  }, [audio, checkChangeVideo]);
 
   useEffect(() => {
     localStorage.setItem("repeatTolltip", JSON.stringify(repeatTolltip));

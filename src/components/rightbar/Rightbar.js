@@ -5,6 +5,7 @@ import SingerItem from "../../components/Home/SingerItem";
 import { SongContext } from "../../contexts/SongContextProvider";
 import { useParams } from "react-router-dom";
 import loadingGift from "../../assets/images/loading.gif";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const Rightbar = () => {
   const {
@@ -16,6 +17,7 @@ const Rightbar = () => {
   } = useContext(PlayListContext);
   const { loaderSong, setIdSong, setLoaderSong, infoSong } =
     useContext(SongContext);
+
   const params = useParams();
   const playListLocal = JSON.parse(localStorage.getItem("playList")) || "";
 

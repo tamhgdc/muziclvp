@@ -7,6 +7,9 @@ const FooterLoader = () => {
 
   useEffect(() => {
     setCheckChangeVideo(true);
+    if (localStorage.getItem("idSong")) {
+      setCheckChangeVideo(false);
+    }
   }, []);
 
   return (
