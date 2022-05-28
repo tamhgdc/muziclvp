@@ -92,7 +92,6 @@ const VideoMv = () => {
       if (!checkMiniVideo) {
         video.currentTime = currentTimeShared;
         setCurrentTime(currentTimeShared);
-        setActiveSound(true);
       }
     }
     return () => clearTimeout(timeOut);
@@ -253,10 +252,9 @@ const VideoMv = () => {
         setWidthSound("100");
         video.volume = 1;
         video.muted = false;
-        setCurrentSound("100");
+        setCurrentSound("1");
         if (saveSound) {
           setWidthSound(saveSound);
-          setCurrentSound(saveSound / 100);
           video.volume = saveSound / 100;
         }
       } else {

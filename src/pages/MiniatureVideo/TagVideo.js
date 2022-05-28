@@ -15,6 +15,8 @@ const TagVideo = () => {
     repeatVideo,
     autoPlayVideo,
     currentSound,
+    checkRenderList,
+    setReCommends,
   } = useContext(VideoContext);
   const [video, setVideo] = useState("");
   const [isPlay, setIsPlay] = useState(false);
@@ -36,6 +38,12 @@ const TagVideo = () => {
       setVideo(Ref.current);
     }
   }, []);
+
+  useEffect(() => {
+    if (!checkRenderList && dataVideo) {
+      setReCommends([dataVideo, ...dataVideo.recommends]);
+    }
+  }, [checkRenderList]);
 
   useEffect(() => {
     if (video && !isPlay) {
