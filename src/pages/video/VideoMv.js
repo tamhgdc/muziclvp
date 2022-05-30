@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import { VideoContext } from "../../contexts/VideoContextProvider";
-import { useNavigate } from "react-router-dom";
+import { parsePath, useNavigate } from "react-router-dom";
 
 const useQuality = (value) => {
   let qualityRef = useRef();
@@ -49,6 +49,7 @@ const VideoMv = () => {
   //xử lý video
   const [currentTime, setCurrentTime] = useState("");
   const [saveCurrentTime, setSaveCurrentTime] = useState("");
+  const [checkWidthVideo, setCheckWidthVideo] = useState(false);
   const [widthVideo, setWidthVideo] = useState("0");
   const [saveWidthVideo, setSaveWidthVideo] = useState("");
   const [setting, setSetting] = useState(false);
@@ -116,6 +117,13 @@ const VideoMv = () => {
     setHiddenTolltip(true);
   };
 
+  //change widthvideo to PlayVideo
+  useEffect(() => {
+    if (checkWidthVideo) {
+      playVideo();
+    }
+  }, [checkWidthVideo]);
+
   //update Video
   const updateOnTime = () => {
     video.ontimeupdate = () => {
@@ -159,7 +167,7 @@ const VideoMv = () => {
     setSaveWidthVideo(e.target.value);
     let seekTime = (e.target.value / 100) * video.duration;
     video.currentTime = seekTime;
-    playVideo();
+    setCheckWidthVideo(true);
   };
   //repeatVideo
   const handleRepeat = () => {
@@ -278,7 +286,7 @@ const VideoMv = () => {
       setActiveSound(false);
     }
   };
-
+  console.log(widthVideo, saveWidthVideo);
   return (
     <div
       className="video__container"
@@ -315,14 +323,14 @@ const VideoMv = () => {
             type="range"
             min="0"
             max="100"
-            value={saveWidthVideo ? saveWidthVideo : widthVideo}
+            value={checkWidthVideo ? saveWidthVideo : widthVideo}
             onChange={handleChangeVideo}
           />
           <div className="current__time current__time__video">
             <div
               className="step__time fix__step"
               style={{
-                width: `${saveWidthVideo ? saveWidthVideo : widthVideo}%`,
+                width: `${checkWidthVideo ? saveWidthVideo : widthVideo}%`,
               }}
             ></div>
           </div>

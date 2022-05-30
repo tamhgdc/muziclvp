@@ -24,6 +24,7 @@ const TagVideo = () => {
   const [isPlay, setIsPlay] = useState(false);
   const [widthVideo, setWidthVideo] = useState("0");
   const [saveWidthVideo, setSaveWidthVideo] = useState("");
+  const [checkWidthVideo, setCheckWidthVideo] = useState(false);
 
   const navigate = useNavigate();
   const Ref = useRef();
@@ -62,8 +63,6 @@ const TagVideo = () => {
       video.currentTime = currentTimeShared;
       video.volume = currentSound;
     }
-
-    console.log(currentSound);
   }, [video, checkMiniVideo]);
 
   // Play & pause video
@@ -148,6 +147,12 @@ const TagVideo = () => {
     setIdVideo(canListen[i].encodeId);
   };
 
+  useEffect(() => {
+    if (checkWidthVideo) {
+      playVideo();
+    }
+  }, [checkWidthVideo]);
+
   //change Video
   const handleChangeVideo = (e) => {
     setWidthVideo(e.target.value);
@@ -155,7 +160,6 @@ const TagVideo = () => {
     setCurrentTimeShared(video.currentTime);
     let seekTime = (e.target.value / 100) * video.duration;
     video.currentTime = seekTime;
-    playVideo();
   };
   return (
     <>
@@ -214,14 +218,14 @@ const TagVideo = () => {
               type="range"
               min="0"
               max="100"
-              value={saveWidthVideo ? saveWidthVideo : widthVideo}
+              value={checkWidthVideo ? saveWidthVideo : widthVideo}
               onChange={handleChangeVideo}
             />
             <div className="current__time">
               <div
                 className="step__time"
                 style={{
-                  width: `${saveWidthVideo ? saveWidthVideo : widthVideo}%`,
+                  width: `${checkWidthVideo ? saveWidthVideo : widthVideo}%`,
                 }}
               ></div>
             </div>
