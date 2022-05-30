@@ -160,6 +160,7 @@ const TagVideo = () => {
     setCurrentTimeShared(video.currentTime);
     let seekTime = (e.target.value / 100) * video.duration;
     video.currentTime = seekTime;
+    setCheckWidthVideo(true);
   };
   return (
     <>

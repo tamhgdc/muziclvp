@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import { VideoContext } from "../../contexts/VideoContextProvider";
-import { parsePath, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const useQuality = (value) => {
   let qualityRef = useRef();
@@ -49,9 +49,9 @@ const VideoMv = () => {
   //xử lý video
   const [currentTime, setCurrentTime] = useState("");
   const [saveCurrentTime, setSaveCurrentTime] = useState("");
-  const [checkWidthVideo, setCheckWidthVideo] = useState(false);
   const [widthVideo, setWidthVideo] = useState("0");
   const [saveWidthVideo, setSaveWidthVideo] = useState("");
+  const [checkWidthVideo, setCheckWidthVideo] = useState(false);
   const [setting, setSetting] = useState(false);
   const [urlVideo, setUrlVideo] = useState("");
   const [checkQuality, setCheckQuality] = useState("720p");
@@ -117,13 +117,6 @@ const VideoMv = () => {
     setHiddenTolltip(true);
   };
 
-  //change widthvideo to PlayVideo
-  useEffect(() => {
-    if (checkWidthVideo) {
-      playVideo();
-    }
-  }, [checkWidthVideo]);
-
   //update Video
   const updateOnTime = () => {
     video.ontimeupdate = () => {
@@ -160,6 +153,13 @@ const VideoMv = () => {
       }
     };
   };
+
+  // play when saveWidthVideo
+  useEffect(() => {
+    if (checkWidthVideo) {
+      playVideo();
+    }
+  }, [checkWidthVideo]);
 
   //change Video
   const handleChangeVideo = (e) => {
@@ -286,7 +286,7 @@ const VideoMv = () => {
       setActiveSound(false);
     }
   };
-  console.log(widthVideo, saveWidthVideo);
+
   return (
     <div
       className="video__container"
@@ -323,14 +323,14 @@ const VideoMv = () => {
             type="range"
             min="0"
             max="100"
-            value={checkWidthVideo ? saveWidthVideo : widthVideo}
+            value={saveWidthVideo ? saveWidthVideo : widthVideo}
             onChange={handleChangeVideo}
           />
           <div className="current__time current__time__video">
             <div
               className="step__time fix__step"
               style={{
-                width: `${checkWidthVideo ? saveWidthVideo : widthVideo}%`,
+                width: `${saveWidthVideo ? saveWidthVideo : widthVideo}%`,
               }}
             ></div>
           </div>
