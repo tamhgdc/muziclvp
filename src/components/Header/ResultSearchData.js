@@ -21,7 +21,7 @@ const ResultSearchData = () => {
   const { checkPlayAudio, setCheckPlayAudio, setCheckModalVip } =
     useContext(PlayListContext);
   const { loaderSong, setIdSong, setLoaderSong } = useContext(SongContext);
-  const { setIdVideo, setCheckMiniVideo, setCheckChangeVideo } =
+  const { setIdVideo, setCheckMiniVideo, setCheckChangeVideo, checkMiniVideo } =
     useContext(VideoContext);
   const params = useParams();
 
@@ -57,7 +57,16 @@ const ResultSearchData = () => {
       {loaderData ? (
         <ResultSearchLoader />
       ) : (
-        <div className="content">
+        <div
+          className="content"
+          style={{
+            height: `${
+              localStorage.getItem("idSong") && !checkMiniVideo
+                ? ""
+                : "calc(100vh - 70px)"
+            }`,
+          }}
+        >
           <div className="navbar__mv">
             <h3>Kết quả tìm kiếm</h3>
             <ul>

@@ -1,15 +1,25 @@
 import MainLayout from "../../layout/MainLayout";
-import React from "react";
+import React, { useContext } from "react";
 import "./personal.css";
 import PlayList from "../../components/personal/PlayList";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const Personal = () => {
   const location = useLocation();
-
+  const { checkMiniVideo } = useContext(VideoContext);
   return (
     <MainLayout>
-      <div className="content">
+      <div
+        className="content"
+        style={{
+          height: `${
+            localStorage.getItem("idSong") && !checkMiniVideo
+              ? ""
+              : "calc(100vh - 70px)"
+          }`,
+        }}
+      >
         <div className="title__library">
           Thư viện
           <span className="icon__play__library">

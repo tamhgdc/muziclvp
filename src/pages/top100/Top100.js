@@ -6,16 +6,27 @@ import MainLayout from "../../layout/MainLayout";
 import "./top100.css";
 import { HomeContext } from "../../contexts/HomeContextProvider";
 import HomeLoader from "../../components/Home/HomeLoader";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const Top100 = () => {
   const { dataHome, loader } = useContext(HomeContext);
+  const { checkMiniVideo } = useContext(VideoContext);
 
   return (
     <MainLayout>
       {loader ? (
         <HomeLoader />
       ) : (
-        <div className="content">
+        <div
+          className="content"
+          style={{
+            height: `${
+              localStorage.getItem("idSong") && !checkMiniVideo
+                ? ""
+                : "calc(100vh - 70px)"
+            }`,
+          }}
+        >
           <div className="bg-blur2"></div>
           <div className="bg-alpha2"></div>
           <div className="banner-top100"></div>

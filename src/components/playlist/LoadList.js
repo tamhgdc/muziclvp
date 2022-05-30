@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const LoadList = () => {
+  const { checkMiniVideo } = useContext(VideoContext);
+
   const [run, setRun] = useState(true);
   useEffect(() => {
     let animation;
@@ -23,7 +26,16 @@ const LoadList = () => {
   }, []);
 
   return (
-    <div className="content">
+    <div
+      className="content"
+      style={{
+        height: `${
+          localStorage.getItem("idSong") && !checkMiniVideo
+            ? ""
+            : "calc(100vh - 70px)"
+        }`,
+      }}
+    >
       <div className="List__song__main">
         <div className="List__song__right">
           <span

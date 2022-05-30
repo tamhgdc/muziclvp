@@ -4,17 +4,28 @@ import MainLayout from "../../layout/MainLayout";
 import { MvContext } from "../../contexts/MvContextProvider";
 import HomeLoader from "../../components/Home/HomeLoader";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const Mv = () => {
   const { loader, setId } = useContext(MvContext);
   const location = useLocation();
+  const { checkMiniVideo } = useContext(VideoContext);
 
   return (
     <MainLayout>
       {loader ? (
         <HomeLoader />
       ) : (
-        <div className="content">
+        <div
+          className="content"
+          style={{
+            height: `${
+              localStorage.getItem("idSong") && !checkMiniVideo
+                ? ""
+                : "calc(100vh - 70px)"
+            }`,
+          }}
+        >
           <div className="navbar__mv">
             <h3>mv</h3>
             <ul>

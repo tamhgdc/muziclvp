@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import CategoryList from "../../components/category/CategoryList";
 import National from "../../components/category/National";
 import Theme from "../../components/category/Theme";
 import MainLayout from "../../layout/MainLayout";
 import "./category.css";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const Category = () => {
+  const { checkMiniVideo } = useContext(VideoContext);
+
   return (
     <MainLayout>
-      <div className="content">
+      <div
+        className="content"
+        style={{
+          height: `${
+            localStorage.getItem("idSong") && !checkMiniVideo
+              ? ""
+              : "calc(100vh - 70px)"
+          }`,
+        }}
+      >
         <div className="banner__vip">
           <figure>
             <img

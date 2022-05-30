@@ -3,10 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import { MvContext } from "../../contexts/MvContextProvider";
 import { HomeContext } from "../../contexts/HomeContextProvider";
 import { useNavigate } from "react-router-dom";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const Sidebar = () => {
   const { setId } = useContext(MvContext);
   const { setLoadPage } = useContext(HomeContext);
+  const { checkMiniVideo } = useContext(VideoContext);
   const navigate = useNavigate();
   return (
     <div className="sidebar">
@@ -73,7 +75,14 @@ const Sidebar = () => {
             </li>
           </ul>
           <div className="navbar__underlined"></div>
-          <ul className="sidebar__scrollbar">
+          <ul
+            className="sidebar__scrollbar"
+            style={{
+              height: `${
+                localStorage.getItem("idSong") && !checkMiniVideo ? "" : "100%"
+              }`,
+            }}
+          >
             <li className={`menu__item`}>
               <div className="btn__random__song">
                 <i className="fas fa-random"></i>
@@ -182,7 +191,14 @@ const Sidebar = () => {
           </ul>
         </div>
 
-        <div className="add__playlist__sidebar">
+        <div
+          className="add__playlist__sidebar"
+          style={{
+            bottom: `${
+              localStorage.getItem("idSong") && !checkMiniVideo ? "" : "10px"
+            }`,
+          }}
+        >
           <i className="fa-solid fa-plus"></i>
           <span>Tạo playlist mới</span>
         </div>

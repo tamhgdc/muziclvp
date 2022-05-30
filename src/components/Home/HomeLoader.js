@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const DiscoveryLoader = () => {
+  const { checkMiniVideo } = useContext(VideoContext);
+
   const [run, setRun] = useState(true);
   useEffect(() => {
     let animation;
@@ -23,7 +26,16 @@ const DiscoveryLoader = () => {
   }, []);
 
   return (
-    <div className="content">
+    <div
+      className="content"
+      style={{
+        height: `${
+          localStorage.getItem("idSong") && !checkMiniVideo
+            ? ""
+            : "calc(100vh - 70px)"
+        }`,
+      }}
+    >
       <div className="gallery">
         <div className="gallery__container">
           <div className={`gallery__item loader ${!run && "run"}`}></div>

@@ -12,16 +12,28 @@ import ZingChart from "../../components/Home/zingchart-home/ZingChart";
 import HomeLoader from "../../components/Home/HomeLoader";
 import ZingChoice from "../../components/Home/ZingChoice";
 import { HomeContext } from "../../contexts/HomeContextProvider";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const Home = () => {
   const { dataHome, loader, loader2, lazyLoading } = useContext(HomeContext);
+  const { checkMiniVideo } = useContext(VideoContext);
 
   return (
     <MainLayout>
       {loader ? (
         <HomeLoader />
       ) : (
-        <div className="content" onScroll={lazyLoading}>
+        <div
+          className="content"
+          onScroll={lazyLoading}
+          style={{
+            height: `${
+              localStorage.getItem("idSong") && !checkMiniVideo
+                ? ""
+                : "calc(100vh - 70px)"
+            }`,
+          }}
+        >
           <div className="gallery">
             <GalleryCarousel banner={dataHome[0]} />
 

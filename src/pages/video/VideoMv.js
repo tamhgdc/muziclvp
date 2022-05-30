@@ -254,6 +254,7 @@ const VideoMv = () => {
         video.muted = false;
         setCurrentSound("1");
         if (saveSound) {
+          setCurrentSound(saveSound / 100);
           setWidthSound(saveSound);
           video.volume = saveSound / 100;
         }
@@ -264,7 +265,7 @@ const VideoMv = () => {
         video.volume = 0;
       }
     }
-  }, [video, activeSound]);
+  }, [video, activeSound, checkMiniVideo]);
 
   //change volume
   const changeVolume = (e) => {
@@ -272,7 +273,6 @@ const VideoMv = () => {
       setWidthSound(e.target.value);
       setSaveSound(e.target.value);
       video.volume = e.target.value / 100;
-      setCurrentSound(e.target.value / 100);
       setActiveSound(true);
     } else {
       setActiveSound(false);

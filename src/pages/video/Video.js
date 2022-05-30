@@ -24,6 +24,7 @@ const Video = () => {
     recommends,
     setReCommends,
     setCheckMiniVideo,
+    setCheckChangeVideo,
   } = useContext(VideoContext);
   const { checkModalVideoVip, setCheckModalVideoVip } =
     useContext(PlayListContext);
@@ -33,6 +34,8 @@ const Video = () => {
   //bật tắt route video
   const changeRoute = () => {
     navigate("/the-loai-video");
+    setIdVideo("");
+    if (localStorage.getItem("idSong")) setCheckChangeVideo(false);
   };
   const hanlePlayVideo = () => {
     setAutoPlayVideo(!autoPlayVideo);

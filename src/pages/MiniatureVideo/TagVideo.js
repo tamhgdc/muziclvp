@@ -17,6 +17,8 @@ const TagVideo = () => {
     currentSound,
     checkRenderList,
     setReCommends,
+    setCheckChangeVideo,
+    checkMiniVideo,
   } = useContext(VideoContext);
   const [video, setVideo] = useState("");
   const [isPlay, setIsPlay] = useState(false);
@@ -55,12 +57,14 @@ const TagVideo = () => {
 
   //play khi vào route
   useEffect(() => {
-    if (video) {
+    if (video && checkMiniVideo) {
       playVideo();
       video.currentTime = currentTimeShared;
       video.volume = currentSound;
     }
-  }, [video]);
+
+    console.log(currentSound);
+  }, [video, checkMiniVideo]);
 
   // Play & pause video
   const playVideo = () => {
@@ -177,6 +181,7 @@ const TagVideo = () => {
               onClick={() => {
                 setCheckMiniVideo(false);
                 setIdVideo("");
+                if (localStorage.getItem("idSong")) setCheckChangeVideo(false);
               }}
             ></i>
           </div>

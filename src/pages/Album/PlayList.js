@@ -6,6 +6,7 @@ import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import LoadList from "../../components/playlist/LoadList";
 import { SongContext } from "../../contexts/SongContextProvider";
 import { useParams } from "react-router-dom";
+import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const PlayList = () => {
   const {
@@ -17,6 +18,7 @@ const PlayList = () => {
   } = useContext(PlayListContext);
 
   const { loaderSong } = useContext(SongContext);
+  const { checkMiniVideo } = useContext(VideoContext);
   const [liked, setLiked] = useState("");
   const params = useParams();
 
@@ -41,7 +43,16 @@ const PlayList = () => {
       {loaderPlayList ? (
         <LoadList />
       ) : (
-        <div className="content">
+        <div
+          className="content"
+          style={{
+            height: `${
+              localStorage.getItem("idSong") && !checkMiniVideo
+                ? ""
+                : "calc(100vh - 70px)"
+            }`,
+          }}
+        >
           <div className="List__song__main">
             <div className="List__song__right">
               <div className="List__song__img" onClick={changePlayAudio}>
