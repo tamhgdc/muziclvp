@@ -8,6 +8,7 @@ import SongContextProvider from "./contexts/SongContextProvider";
 import PlayListContextProvider from "./contexts/PlayListContextProvider";
 import VideoContextProvider from "./contexts/VideoContextProvider";
 import SearchContextProvider from "./contexts/SearchContextProvider";
+import KaraokeContextProvider from "./contexts/KaraokeContextProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,7 +19,9 @@ root.render(
         <PlayListContextProvider>
           <SongContextProvider>
             <VideoContextProvider>
-              <App />
+              <KaraokeContextProvider>
+                <App />
+              </KaraokeContextProvider>
             </VideoContextProvider>
           </SongContextProvider>
         </PlayListContextProvider>

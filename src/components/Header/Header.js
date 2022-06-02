@@ -69,17 +69,20 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (infoSong && checkSearch) {
-      localStorage.setItem(
-        "playList",
-        JSON.stringify({
-          encodeId: infoSong.album.encodeId,
-          url: infoSong.album.link,
-          playListSong: [{ ...infoSong }],
-        })
-      );
+    if (!loaderSong && infoSong && checkSearch) {
+      if (infoSong.album) {
+        localStorage.setItem(
+          "playList",
+          JSON.stringify({
+            encodeId: infoSong.album.encodeId,
+            url: infoSong.album.link,
+            playListSong: [{ ...infoSong }],
+          })
+        );
+      }
+      setCheckSearch(false);
     }
-  }, [infoSong, checkSearch]);
+  }, [infoSong, checkSearch, loaderSong]);
 
   useEffect(() => {
     let searchTimeOut;

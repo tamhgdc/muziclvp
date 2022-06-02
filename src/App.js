@@ -5,6 +5,7 @@ import FooterLoader from "./components/Footer/FooterLoader";
 import Footer from "./components/Footer/Footer";
 import { useContext } from "react";
 import Miniature from "./pages/MiniatureVideo/MiniatureVideo";
+import DetailSong from "./pages/detailSong/DetailSong";
 
 function App() {
   const { loaderSong } = useContext(SongContext);
@@ -12,8 +13,9 @@ function App() {
   return (
     <div className="container">
       <Routes
-        el={loaderSong ? <FooterLoader /> : <Footer />}
+        footer={loaderSong ? <FooterLoader /> : <Footer />}
         miniVideo={checkMiniVideo && <Miniature />}
+        detailSong={<DetailSong />}
       />
     </div>
   );

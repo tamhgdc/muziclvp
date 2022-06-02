@@ -27,7 +27,7 @@ const ResultSearchData = () => {
 
   const handleOnclick = (data) => {
     if (JSON.parse(localStorage.getItem("idSong")) !== data.encodeId) {
-      if (params.playlist === "album" && data.streamingStatus !== 2) {
+      if (params.playlist === "album" || data.streamingStatus !== 2) {
         localStorage.setItem("idSong", JSON.stringify(data.encodeId));
         setIdSong(data.encodeId);
         setLoaderSong(true);
@@ -96,7 +96,10 @@ const ResultSearchData = () => {
             </h3>
           </div>
           <div className="rightbar__playlist search__top">
-            <div className="right fix__search" onClick={handleOnclick}>
+            <div
+              className="right fix__search"
+              onClick={() => handleOnclick(dataSearch.top)}
+            >
               <div>
                 <img
                   src={dataSearch && dataSearch.top && dataSearch.top.thumbnail}

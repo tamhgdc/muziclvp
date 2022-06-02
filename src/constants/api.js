@@ -11,3 +11,4 @@ export const PLAYLIST_API =
 export const VIDEO_API = "https://music-player-pink.vercel.app/api/video?id=";
 export const SEARCH =
   "https://music-player-pink.vercel.app/api/search?keyword=";
+export const LYRIC = "https://music-player-pink.vercel.app/api/lyric?id=";

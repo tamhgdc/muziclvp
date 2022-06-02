@@ -31,22 +31,21 @@ const PlayListContextProvider = ({ children }) => {
 
   useEffect(() => {
     let d = [];
-    if (playListData) {
+    if (!loaderPlayList && playListData && checkPlayList) {
       playListData.song.items.forEach((item) => {
         d.push(item);
       });
-      if (checkPlayList) {
-        localStorage.setItem(
-          "playList",
-          JSON.stringify({
-            encodeId: playListData.encodeId,
-            url: playListData.link,
-            playListSong: d,
-          })
-        );
-      }
+
+      localStorage.setItem(
+        "playList",
+        JSON.stringify({
+          encodeId: playListData.encodeId,
+          url: playListData.link,
+          playListSong: d,
+        })
+      );
     }
-  }, [playListData, checkPlayList]);
+  }, [playListData, checkPlayList, loaderPlayList]);
 
   const data = {
     idPlayList,

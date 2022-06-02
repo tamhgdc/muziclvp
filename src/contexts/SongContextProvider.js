@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import getHome from "../apis/home.api";
 import getInfoSong from "../apis/getInfoSong.api";
+import getLyric from "../apis/lyric.api";
 
 export const SongContext = createContext();
 
@@ -13,6 +14,8 @@ const SongContextProvider = ({ children }) => {
   const [songUrl, setSongUrl] = useState("");
   const [infoSong, setInfoSong] = useState("");
   const [loaderSong, setLoaderSong] = useState(true);
+  const [lyric, setLyric] = useState("");
+  const [second, setSeccond] = useState("00:00");
 
   const getSong = async () => {
     await getHome(`song?id=${idSong}`).then((data) => {
@@ -24,11 +27,18 @@ const SongContextProvider = ({ children }) => {
     setLoaderSong(false);
   };
 
+  const getLyricData = async () => {
+    await getLyric(idSong).then((data) => {
+      setLyric(data.data.data);
+    });
+  };
+
   useEffect(() => {
     if (idSong) {
       localStorage.setItem("idSong", JSON.stringify(idSong));
       setLoaderSong(true);
       getSong();
+      getLyricData();
     }
   }, [idSong]);
 
@@ -38,6 +48,9 @@ const SongContextProvider = ({ children }) => {
     setIdSong,
     loaderSong,
     setLoaderSong,
+    lyric,
+    setSeccond,
+    second,
   };
 
   return <SongContext.Provider value={data}>{children}</SongContext.Provider>;

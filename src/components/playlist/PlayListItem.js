@@ -21,7 +21,7 @@ const PlayListItem = ({ data }) => {
 
   const handleOnclick = () => {
     if (JSON.parse(localStorage.getItem("idSong")) !== data.encodeId) {
-      if (params.playlist === "album" && data.streamingStatus !== 2) {
+      if (params.playlist === "album" || data.streamingStatus !== 2) {
         localStorage.setItem("idSong", JSON.stringify(data.encodeId));
         setIdSong(data.encodeId);
         setLoaderSong(true);
@@ -32,7 +32,6 @@ const PlayListItem = ({ data }) => {
       }
     } else {
       setCheckPlayAudio(!checkPlayAudio);
-      setCheckPlayList(true);
     }
     setCheckChangeVideo(false);
     setCheckMiniVideo(false);

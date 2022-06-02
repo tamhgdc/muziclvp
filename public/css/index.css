@@ -17,7 +17,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 999;
+    z-index: 10;
 }
 
 .header__menu {
@@ -431,6 +431,7 @@
     min-width: 768px;
     display: flex;
     align-items: center;
+    
 }
 
 .media__left {
@@ -492,6 +493,7 @@
 
 .media__content {
     width: 60%;
+    z-index: 888;
 }
 
 .np__menu,

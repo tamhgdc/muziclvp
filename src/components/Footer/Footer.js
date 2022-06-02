@@ -3,6 +3,7 @@ import { SongContext } from "../../contexts/SongContextProvider";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import { useParams, useNavigate } from "react-router-dom";
 import { VideoContext } from "../../contexts/VideoContextProvider";
+import { KaraokeContext } from "../../contexts/KaraokeContextProvider";
 
 let useClickOutSide = (handler) => {
   let domNode = useRef();
@@ -49,7 +50,7 @@ const Footer = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { songUrl, infoSong, setIdSong } = useContext(SongContext);
+  const { songUrl, infoSong, setIdSong, setSeccond } = useContext(SongContext);
   const {
     setCheckPlayAudio,
     checkPlayAudio,
@@ -61,11 +62,13 @@ const Footer = () => {
   } = useContext(PlayListContext);
   const { checkChangeVideo } = useContext(VideoContext);
 
+  const { setActiveKara, setMenuKara } = useContext(KaraokeContext);
+
   let i = "";
   let data = [];
   let length;
 
-  const checkSongInPlayList = () => {
+  const findIndex = () => {
     if (playListSongLocal !== "") {
       data = playListSongLocal.playListSong.filter((item) => {
         return params.playlist !== "album" && item.streamingStatus !== 2;
@@ -74,41 +77,18 @@ const Footer = () => {
         if (item.encodeId === idLocalSong) i = index;
       });
       length = data.length;
-
-      if (i !== "") {
-        if (i + 1 >= length) {
-          if (!repeatTolltip) {
-            pauseAudio();
-          } else {
-            i = 0;
-          }
-        } else {
-          i = i + 1;
-        }
-        setIdSong(data[i].encodeId);
-      } else {
-        pauseAudio();
-      }
     }
   };
 
-  const randomRepeat = () => {
-    if (playListSongLocal !== "") {
-      data = playListSongLocal.playListSong.filter((item) => {
-        return params.playlist !== "album" && item.streamingStatus !== 2;
-      });
-      data.find((item, index) => {
-        if (item.encodeId === idLocalSong) i = index;
-      });
-      length = data.length;
+  const randomSong = () => {
+    findIndex();
 
-      if (i !== "") {
-        let newIndex;
-        do {
-          newIndex = Math.floor(Math.random() * length);
-        } while (newIndex === i);
-        setIdSong(data[newIndex].encodeId);
-      }
+    if (i !== "") {
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * length);
+      } while (newIndex === i);
+      setIdSong(data[newIndex].encodeId);
     }
   };
 
@@ -147,39 +127,63 @@ const Footer = () => {
         (audio.currentTime / Math.round(audio.duration)) * 100
       );
       setUpdateTime(percent);
-      audio.onended = () => {
-        switch (randomPlayList) {
-          case "":
-            switch (repeatTolltip) {
-              case "repeatAll":
-                checkSongInPlayList();
-                break;
-              case "repeatOne":
-                playAudio();
-                break;
-              default:
-                checkSongInPlayList();
-                break;
-            }
-            break;
-
-          default:
-            switch (repeatTolltip) {
-              case "repeatAll":
-                randomRepeat();
-                break;
-              case "repeatOne":
-                playAudio();
-                break;
-              default:
-                randomRepeat();
-                break;
-            }
-            break;
-        }
-      };
+      setSeccond(audio.currentTime * 1000);
     };
   };
+
+  const endTime = () => {
+    audio.onended = () => {
+      switch (randomPlayList) {
+        case "":
+          switch (repeatTolltip) {
+            case "repeatAll":
+              findIndex();
+              if (i + 1 === length) {
+                i = 0;
+              } else {
+                i = i + 1;
+              }
+              setIdSong(data[i].encodeId);
+              playAudio();
+              break;
+            case "repeatOne":
+              playAudio();
+              break;
+            default:
+              findIndex();
+              if (i + 1 === length) {
+                pauseAudio();
+              } else {
+                i = i + 1;
+                setIdSong(data[i].encodeId);
+                playAudio();
+              }
+              break;
+          }
+          break;
+
+        default:
+          switch (repeatTolltip) {
+            case "repeatAll":
+              randomSong();
+              break;
+            case "repeatOne":
+              playAudio();
+              break;
+            default:
+              randomSong();
+              break;
+          }
+          break;
+      }
+    };
+  };
+
+  useEffect(() => {
+    if (newRef) {
+      setAudio(newRef.current);
+    }
+  }, []);
 
   useEffect(() => {
     if (audio && checkChangeVideo) {
@@ -192,10 +196,10 @@ const Footer = () => {
   }, [repeatTolltip]);
 
   useEffect(() => {
-    if (newRef) {
-      setAudio(newRef.current);
+    if (audio) {
+      endTime();
     }
-  }, []);
+  }, [audio, repeatTolltip, randomPlayList]);
 
   useEffect(() => {
     localStorage.setItem("randomPlayList", JSON.stringify(randomPlayList));
@@ -272,37 +276,35 @@ const Footer = () => {
 
   const nextSongPlayList = () => {
     if (randomPlayList !== "") {
-      randomRepeat();
+      randomSong();
     } else {
-      checkSongInPlayList();
+      findIndex();
+      if (i + 1 === length) {
+        i = 0;
+      } else {
+        i = i + 1;
+      }
+      setIdSong(data[i].encodeId);
     }
-    playAudio();
+    setCheckPlayAudio(true);
   };
 
   const prevSongPlayList = () => {
     if (randomPlayList === "") {
-      if (playListSongLocal !== "") {
-        data = playListSongLocal.playListSong.filter((item) => {
-          return params.playlist !== "album" && item.streamingStatus !== 2;
-        });
-        data.find((item, index) => {
-          if (item.encodeId === idLocalSong) i = index;
-        });
-        length = data.length;
+      findIndex();
 
-        if (i !== "") {
-          if (i === 0) {
-            i = length - 1;
-          } else {
-            i = i - 1;
-          }
-          setIdSong(data[i].encodeId);
+      if (i !== "") {
+        if (i === 0) {
+          i = length - 1;
+        } else {
+          i = i - 1;
         }
+        setIdSong(data[i].encodeId);
       }
     } else {
-      randomRepeat();
+      randomSong();
     }
-    playAudio();
+    setCheckPlayAudio(true);
   };
 
   const changePage = () => {
@@ -528,7 +530,13 @@ const Footer = () => {
         <div className="media__narrow unclick">
           <div className="mv__item">MV</div>
         </div>
-        <div className="media__narrow">
+        <div
+          className="media__narrow"
+          onClick={() => {
+            setActiveKara(true);
+            setMenuKara("lyric");
+          }}
+        >
           <div>
             <i className="fa fa-microphone"></i>
           </div>
