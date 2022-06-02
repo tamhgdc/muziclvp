@@ -70,9 +70,13 @@ const Karaoke = () => {
         )}
         {infoSong && second + 1500 <= lyric.sentences[0].words[0].startTime ? (
           <div>
-            <p style={{ fontSize: "70px" }}>{infoSong.title}</p>
+            <p style={{ fontSize: "65px", fontWeight: "700" }}>
+              {infoSong.title}
+            </p>
             <div className="singer__kara">
-              <p style={{ fontSize: "40px" }}>{infoSong.artistsNames}</p>
+              <p style={{ fontSize: "35px", fontWeight: "700" }}>
+                {infoSong.artistsNames}
+              </p>
             </div>
           </div>
         ) : (
