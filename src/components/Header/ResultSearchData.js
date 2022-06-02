@@ -18,9 +18,15 @@ import { VideoContext } from "../../contexts/VideoContextProvider";
 const ResultSearchData = () => {
   const [dataSearch, setDataSearch] = useState("");
   const { loaderData, setLoaderData } = useContext(SearchContext);
-  const { checkPlayAudio, setCheckPlayAudio, setCheckModalVip } =
-    useContext(PlayListContext);
-  const { loaderSong, setIdSong, setLoaderSong } = useContext(SongContext);
+  const {
+    checkPlayAudio,
+    setCheckPlayAudio,
+    setCheckModalVip,
+    checkSearch,
+    setCheckSearch,
+  } = useContext(PlayListContext);
+  const { loaderSong, setIdSong, setLoaderSong, infoSong } =
+    useContext(SongContext);
   const { setIdVideo, setCheckMiniVideo, setCheckChangeVideo, checkMiniVideo } =
     useContext(VideoContext);
   const params = useParams();
@@ -38,6 +44,7 @@ const ResultSearchData = () => {
     } else {
       setCheckPlayAudio(!checkPlayAudio);
     }
+    setCheckSearch(true);
     setCheckChangeVideo(false);
     setCheckMiniVideo(false);
     setIdVideo("");
@@ -51,6 +58,22 @@ const ResultSearchData = () => {
   useEffect(() => {
     getSearch();
   }, [params.keyword]);
+
+  useEffect(() => {
+    if (!loaderSong && infoSong && checkSearch) {
+      if (infoSong.album) {
+        localStorage.setItem(
+          "playList",
+          JSON.stringify({
+            encodeId: infoSong.album.encodeId,
+            url: infoSong.album.link,
+            playListSong: [{ ...infoSong }],
+          })
+        );
+      }
+      setCheckSearch(false);
+    }
+  }, [infoSong, checkSearch, loaderSong]);
 
   return (
     <MainLayout>

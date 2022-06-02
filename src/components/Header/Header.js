@@ -84,6 +84,8 @@ const Header = () => {
     }
   }, [infoSong, checkSearch, loaderSong]);
 
+  console.log(checkSearch);
+
   useEffect(() => {
     let searchTimeOut;
     if (value !== "") {
