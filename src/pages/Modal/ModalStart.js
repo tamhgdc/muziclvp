@@ -73,6 +73,8 @@ const Modal = () => {
                 bài hát
                 <br /> <i className="fa-solid fa-minus"></i> Chức năng xem
                 playList
+                <br /> <i className="fa-solid fa-minus"></i> Chức năng karaoke
+                và lyric
               </p>
             </div>
           </div>
