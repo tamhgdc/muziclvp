@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import MainLayout from "../../layout/MainLayout";
-import PlayListItem from "../playlist/PlayListItem";
+import ItemSongSearch from "./ItemSongSearch";
 import "./resultsearch.css";
 import { NavLink } from "react-router-dom";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
@@ -37,7 +37,7 @@ const ResultSearchData = () => {
         localStorage.setItem("idSong", JSON.stringify(data.encodeId));
         setIdSong(data.encodeId);
         setLoaderSong(true);
-        setCheckPlayAudio(!checkPlayAudio);
+        setCheckPlayAudio(true);
       } else {
         setCheckModalVip(true);
       }
@@ -119,15 +119,22 @@ const ResultSearchData = () => {
             </h3>
           </div>
           <div className="rightbar__playlist search__top">
-            <div
-              className="right fix__search"
-              onClick={() => handleOnclick(dataSearch.top)}
-            >
-              <div>
+            <div className="right fix__search">
+              <div onClick={() => handleOnclick(dataSearch.top)}>
                 <img
                   src={dataSearch && dataSearch.top && dataSearch.top.thumbnail}
                 />
-                <div className="option__playlist__selection">
+                <div
+                  className="option__playlist__selection"
+                  style={{
+                    opacity: `${
+                      JSON.parse(localStorage.getItem("idSong")) ===
+                      dataSearch.top.encodeId
+                        ? "1"
+                        : "0"
+                    }`,
+                  }}
+                >
                   <div
                     className="option__selection"
                     style={{ cursor: "pointer" }}
@@ -142,11 +149,15 @@ const ResultSearchData = () => {
                         className="gif__play"
                         style={{
                           border: "none",
-                          width: "10px",
-                          height: "10px",
+                          width: "50px",
+                          height: "50px",
                         }}
                       >
                         <img
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                          }}
                           src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/icon-playing.gif"
                           alt=""
                         />
@@ -159,13 +170,18 @@ const ResultSearchData = () => {
                       <img
                         src={loadingGift}
                         style={{
-                          width: "20px",
-                          height: "20px",
+                          width: "50px",
+                          height: "50px",
                           padding: "8px",
                         }}
                       />
                     ) : (
-                      <i className="fa-solid fa-play"></i>
+                      <i
+                        className="fa-solid fa-play"
+                        style={{
+                          fontSize: "50px",
+                        }}
+                      ></i>
                     )}
                   </div>
                 </div>
@@ -206,7 +222,7 @@ const ResultSearchData = () => {
             </li>
             {dataSearch &&
               dataSearch.songs.map((item, index) => {
-                return <PlayListItem data={item} key={index} />;
+                return <ItemSongSearch data={item} key={index} />;
               })}
           </ul>
           <ul className="item__music__list list__song__item search__header">

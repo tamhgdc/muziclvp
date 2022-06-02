@@ -5,13 +5,16 @@ import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import loadingGift from "../../assets/images/loading.gif";
 import { VideoContext } from "../../contexts/VideoContextProvider";
 
-const PlayListItem = ({ data }) => {
-  const { setIdSong, setLoaderSong, loaderSong } = useContext(SongContext);
+const ItemSongSearch = ({ data }) => {
+  const { setIdSong, setLoaderSong, loaderSong, infoSong } =
+    useContext(SongContext);
   const {
     setCheckPlayAudio,
     checkPlayAudio,
     setCheckModalVip,
     setCheckPlayList,
+    setCheckSearch,
+    checkSearch,
   } = useContext(PlayListContext);
 
   const { setIdVideo, setCheckMiniVideo, setCheckChangeVideo } =
@@ -33,10 +36,27 @@ const PlayListItem = ({ data }) => {
     } else {
       setCheckPlayAudio(!checkPlayAudio);
     }
+    setCheckSearch(true);
     setCheckChangeVideo(false);
     setCheckMiniVideo(false);
     setIdVideo("");
   };
+
+  useEffect(() => {
+    if (!loaderSong && infoSong && checkSearch) {
+      if (infoSong.album) {
+        localStorage.setItem(
+          "playList",
+          JSON.stringify({
+            encodeId: infoSong.album.encodeId,
+            url: infoSong.album.link,
+            playListSong: [{ ...infoSong }],
+          })
+        );
+      }
+      setCheckSearch(false);
+    }
+  }, [infoSong, checkSearch, loaderSong]);
 
   return (
     <li
@@ -125,4 +145,4 @@ const PlayListItem = ({ data }) => {
   );
 };
 
-export default PlayListItem;
+export default ItemSongSearch;
