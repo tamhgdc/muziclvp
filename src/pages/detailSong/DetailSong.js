@@ -34,7 +34,10 @@ const DetailSong = () => {
               </div>
               <div className="detail__title__top">
                 <div>Từ playlist</div>
-                <div className="detail__title__top2">title</div>
+                <div className="detail__title__top2">
+                  {localStorage.getItem("playList") &&
+                    JSON.parse(localStorage.getItem("playList")).title}
+                </div>
               </div>
             </div>
             <div className="detail__top__center">

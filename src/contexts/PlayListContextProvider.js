@@ -43,6 +43,7 @@ const PlayListContextProvider = ({ children }) => {
           encodeId: playListData.encodeId,
           url: playListData.link,
           playListSong: d,
+          title: playListData.title,
         })
       );
     }

@@ -77,6 +77,7 @@ const Header = () => {
             encodeId: infoSong.album.encodeId,
             url: infoSong.album.link,
             playListSong: [{ ...infoSong }],
+            title: infoSong.album.title,
           })
         );
       }
