@@ -128,8 +128,9 @@ const ResultSearchData = () => {
                   className="option__playlist__selection"
                   style={{
                     opacity: `${
+                      dataSearch.top &&
                       JSON.parse(localStorage.getItem("idSong")) ===
-                      dataSearch.top.encodeId
+                        dataSearch.top.encodeId
                         ? "1"
                         : "0"
                     }`,

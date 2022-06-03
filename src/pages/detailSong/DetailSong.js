@@ -3,12 +3,14 @@ import DefaultPlayList from "../../components/detailsong/DefaultPlayList";
 import { KaraokeContext } from "../../contexts/KaraokeContextProvider";
 import Karaoke from "../../components/detailsong/Karaoke";
 import Lyric from "../../components/detailsong/Lyric";
+import { SongContext } from "../../contexts/SongContextProvider";
 
 import "./detailSong.css";
 
 const DetailSong = () => {
   const { activeKara, setActiveKara, setMenuKara, menuKara } =
     useContext(KaraokeContext);
+  const { lyric } = useContext(SongContext);
   const [fullScreen, setFullScreen] = useState(false);
   useEffect(() => {
     if (fullScreen) {
@@ -53,7 +55,9 @@ const DetailSong = () => {
                     className={`item__detail__menu ${
                       menuKara === "karaoke" ? "active__detail__menu" : ""
                     }`}
-                    onClick={() => setMenuKara("karaoke")}
+                    onClick={() => {
+                      if (lyric.sentences) setMenuKara("karaoke");
+                    }}
                   >
                     Karaoke
                   </div>

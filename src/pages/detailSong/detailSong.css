@@ -319,16 +319,7 @@
     top: -4px;
     color: var(--yellow);
     overflow: hidden;
-    animation: run-text 2s infinite linear;
-  }
-  
-  @keyframes run-text {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
+    width: 100%;
   }
 
   .lyric__song {
@@ -351,4 +342,18 @@
   justify-content: center;
   align-items: center;
   margin-top: 40px;
+}
+
+.word--kara {
+  position: relative;
+}
+.animation__test {
+  position: absolute;
+  width: 0%;
+  top: 0;
+  left: 0;
+}
+
+.transition-kara{
+  transition: 1s;
 }
