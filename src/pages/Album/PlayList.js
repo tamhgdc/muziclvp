@@ -15,6 +15,7 @@ const PlayList = () => {
     checkPlayAudio,
     loaderPlayList,
     setIdPlayList,
+    setModalPlayAudio,
   } = useContext(PlayListContext);
 
   const { loaderSong } = useContext(SongContext);
@@ -23,7 +24,14 @@ const PlayList = () => {
   const params = useParams();
 
   const changePlayAudio = () => {
-    setCheckPlayAudio(!checkPlayAudio);
+    if (
+      params.id.split(".")[0] ===
+      JSON.parse(localStorage.getItem("playList")).encodeId
+    ) {
+      setCheckPlayAudio(!checkPlayAudio);
+    } else {
+      setModalPlayAudio(true);
+    }
   };
   useEffect(() => {
     setIdPlayList(params.id.split(".")[0]);
@@ -59,7 +67,10 @@ const PlayList = () => {
                 <img src={playListData.thumbnail} alt="" />
                 <div className="option__playlist__selection">
                   <div className="option__selection item__play__selection">
-                    {!loaderSong && checkPlayAudio ? (
+                    {!loaderSong &&
+                    checkPlayAudio &&
+                    params.id.split(".")[0] ===
+                      JSON.parse(localStorage.getItem("playList")).encodeId ? (
                       <span className="gif__play">
                         <img
                           src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/icon-playing.gif"
@@ -83,15 +94,23 @@ const PlayList = () => {
                 </div>
                 <div
                   className="description__play__song"
-                  onClick={() => setCheckPlayAudio(!checkPlayAudio)}
+                  onClick={changePlayAudio}
                 >
                   <span>
                     <i
                       className={`fa-solid ${
-                        !loaderSong && checkPlayAudio ? "fa-pause" : "fa-play"
+                        !loaderSong &&
+                        checkPlayAudio &&
+                        params.id.split(".")[0] ===
+                          JSON.parse(localStorage.getItem("playList")).encodeId
+                          ? "fa-pause"
+                          : "fa-play"
                       }`}
                     ></i>{" "}
-                    {!loaderSong && checkPlayAudio
+                    {!loaderSong &&
+                    checkPlayAudio &&
+                    params.id.split(".")[0] ===
+                      JSON.parse(localStorage.getItem("playList")).encodeId
                       ? "tạm dừng"
                       : "tiếp tục phát"}
                   </span>

@@ -1,18 +1,23 @@
 import axios from "axios";
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { SongContext } from "../../contexts/SongContextProvider";
-import { Lrc, parse } from "react-lrc";
+import { Lrc } from "react-lrc";
 
 const Lyric = () => {
   const { lyric, second, infoSong } = useContext(SongContext);
   const [dataLyric, setDataLyric] = useState("");
   const [indexChange, setIndexChange] = useState("");
   useEffect(() => {
-    if (lyric) {
+    if (lyric.file) {
       const getData = async () => {
-        return await axios.get(lyric.file).then((data) => {
-          setDataLyric(data.data);
-        });
+        return await axios
+          .get(lyric.file)
+          .then((data) => {
+            setDataLyric(data.data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
       };
       getData();
     }
@@ -32,7 +37,7 @@ const Lyric = () => {
         <div className="detail__lyric__img">
           <img src={infoSong.thumbnailM} />
         </div>
-        {dataLyric && (
+        {dataLyric && lyric.file ? (
           <Lrc
             ref={Ref}
             lrc={dataLyric}
@@ -49,6 +54,10 @@ const Lyric = () => {
             currentMillisecond={second}
             autoScroll={true}
           />
+        ) : (
+          <div className="lyric__error">
+            <h1 className="lyric__error-h1">Lời bài hát đang cập nhật</h1>
+          </div>
         )}
       </div>
       <div className="detail__name__song">

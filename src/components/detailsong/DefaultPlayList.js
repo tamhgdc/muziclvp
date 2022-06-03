@@ -4,6 +4,7 @@ import { KaraokeContext } from "../../contexts/KaraokeContextProvider";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import { SongContext } from "../../contexts/SongContextProvider";
 import { VideoContext } from "../../contexts/VideoContextProvider";
+import loadingGift from "../../assets/images/loading.gif";
 
 const DefaultPlayList = () => {
   const playListLocal = JSON.parse(localStorage.getItem("playList"));
@@ -15,7 +16,7 @@ const DefaultPlayList = () => {
   const { activeKara } = useContext(KaraokeContext);
   const { checkPlayAudio, setCheckPlayAudio, setCheckModalVip } =
     useContext(PlayListContext);
-  const { setIdSong, setLoaderSong } = useContext(SongContext);
+  const { setIdSong, setLoaderSong, loaderSong } = useContext(SongContext);
   const { setIdVideo, setCheckMiniVideo, setCheckChangeVideo } =
     useContext(VideoContext);
 
@@ -87,7 +88,43 @@ const DefaultPlayList = () => {
                 >
                   <img src={item.thumbnailM} />
                   <div className="option__detail__song">
-                    <i className="fa-solid fa-play"></i>
+                    {!loaderSong &&
+                    checkPlayAudio &&
+                    idSongLocal === item.encodeId ? (
+                      <i
+                        className="fa-solid fa-pause"
+                        style={{
+                          padding: "10px 18px 10px 18px",
+                          border: "2px solid white",
+                          borderRadius: "50%",
+                        }}
+                      ></i>
+                    ) : loaderSong && idSongLocal === item.encodeId ? (
+                      <img
+                        src={loadingGift}
+                        style={{
+                          width: "35px",
+                          height: "35px",
+                          padding: "12px",
+                          border: "2px solid white",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    ) : (
+                      <i className="fa-solid fa-play"></i>
+                    )}
+                  </div>
+                  <div>
+                    {!loaderSong &&
+                      checkPlayAudio &&
+                      idSongLocal === item.encodeId && (
+                        <span className="gif__play default__play">
+                          <img
+                            src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/icon-playing.gif"
+                            alt=""
+                          />
+                        </span>
+                      )}
                   </div>
                 </div>
                 <div className="detail__center__description">

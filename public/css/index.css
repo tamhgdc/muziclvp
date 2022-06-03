@@ -1381,3 +1381,71 @@ a{
 .list__item__ft:hover > .item__list__ft > .img__list__ft > .option__playlist__selection {
     opacity: 1 !important;
 }
+
+[data-title] {
+    position: relative;
+  }
+  
+  [data-title]:hover::before {
+    content: attr(data-title);
+    position: absolute;
+    white-space: nowrap;
+    top: -34px;
+    padding: 3px 15px;
+    font-size: 12px;
+    border-radius: 5px;
+    background-color: var(--setting-icon-text);
+    color: var(--spotlight-item);
+    z-index: 9999;
+    text-transform: initial;
+  font-weight: 500;
+  }
+  
+  [data-title]:hover::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    width: 0px;
+    height: 0px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid var(--setting-icon-text);
+    z-index: 9999;
+  }
+  
+  .rdt__before__0:hover::before {
+    right: 0;
+  }
+  
+  .ldt__before__-40::before {
+    left: -40px;
+  }
+  .ldt__after__10::after {
+    left: 10px;
+  }
+  
+  .bdt__after::after {
+    border-top: unset !important;
+    border-bottom: 8px solid var(--setting-icon-text);
+  }
+  
+  .tdt__after__47::after {
+    top: 47px !important;
+  }
+  
+  .tdt__before__55::before {
+    top: 55px !important;
+  }
+  .bdt__after-14::after{
+      left: 15px;
+  }
+  .bdt__before__15::before{
+    left: -14px;
+}
+.tdt__after__47::after {
+    top: 47px !important;
+  }
+  
+  .tdt__before__55::before {
+    top: 55px !important;
+  }

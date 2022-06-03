@@ -14,6 +14,7 @@ const PlayListContextProvider = ({ children }) => {
   const [checkPlayList, setCheckPlayList] = useState(false);
   const [checkSearch, setCheckSearch] = useState(false);
   const [checkModalVideoVip, setCheckModalVideoVip] = useState(false);
+  const [modalPlayAudio, setModalPlayAudio] = useState(false);
 
   const getPlayList = async () => {
     await playList(`${idPlayList}`).then((data) => {
@@ -65,6 +66,8 @@ const PlayListContextProvider = ({ children }) => {
     checkSearch,
     setCheckModalVideoVip,
     checkModalVideoVip,
+    setModalPlayAudio,
+    modalPlayAudio,
   };
 
   return (

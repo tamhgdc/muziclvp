@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { SongContext } from "../../contexts/SongContextProvider";
 import { useParams } from "react-router-dom";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";

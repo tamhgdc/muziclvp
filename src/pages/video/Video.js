@@ -98,18 +98,21 @@ const Video = () => {
         </div>
         <div className="header__video__right">
           <div
-            className="menu__click__"
+            className="menu__click__ bdt__after tdt__after__47 tdt__before__55 bdt__after-14 bdt__before__15"
             onClick={() => {
               setCheckMiniVideo(true);
               navigate("/the-loai-video");
+              setCheckChangeVideo(true);
             }}
+            data-title="Thu nhỏ"
           >
             <i className="fa fa-compress" aria-hidden="true"></i>
           </div>
           <div
-            className="menu__click__"
+            className="menu__click__ bdt__after tdt__after__47 tdt__before__55 bdt__after-14 bdt__before__15"
             style={{ marginRight: "0" }}
             onClick={changeRoute}
+            data-title="Đóng"
           >
             <i className="fa fa-times" aria-hidden="true"></i>
           </div>
@@ -117,7 +120,6 @@ const Video = () => {
       </div>
       <div className="video__all__playlist">
         {loaderVideo ? <div className="video__container"></div> : <VideoMv />}
-        {/* ấ */}
         <div
           className="list__video"
           style={{ display: `${checkZoom ? "none" : ""}` }}

@@ -42,6 +42,9 @@ const Footer = () => {
   const [randomPlayList, setRandomPlayList] = useState(
     JSON.parse(localStorage.getItem("randomPlayList")) || ""
   );
+  const [like, setLike] = useState("");
+  const [listen, setListen] = useState("");
+
   const idLocalSong = JSON.parse(localStorage.getItem("idSong"));
   const playListSongLocal = JSON.parse(localStorage.getItem("playList"));
 
@@ -317,6 +320,30 @@ const Footer = () => {
     }
   };
 
+  useEffect(() => {
+    if (infoSong) {
+      let arrLike = String(infoSong.like).split("");
+      infoSong.like >= 1000 && setLike(arrLike[0] + "k");
+      infoSong.like >= 10000 && setLike(arrLike[0] + arrLike[1] + "k");
+      infoSong.like >= 100000 &&
+        setLike(arrLike[0] + arrLike[1] + arrLike[2] + "k");
+      infoSong.like >= 1000000 && setLike(arrLike[0] + "m");
+
+      //listen
+      let arrListen = String(infoSong.listen).split("");
+      infoSong.listen >= 1000 && setListen(arrListen[0] + "k");
+      infoSong.listen >= 10000 && setListen(arrListen[0] + arrListen[1] + "k");
+      infoSong.listen >= 100000 &&
+        setListen(arrListen[0] + arrListen[1] + arrListen[2] + "k");
+      infoSong.listen >= 1000000 && setListen(arrListen[0] + "m");
+      infoSong.listen >= 10000000 &&
+        setListen(arrListen[0] + arrListen[1] + "m");
+      infoSong.listen >= 100000000 &&
+        setListen(arrListen[0] + arrListen[1] + arrListen[2] + "m");
+      infoSong.listen >= 1000000000 && setListen(arrListen[0] + "b");
+    }
+  }, [infoSong]);
+
   return (
     <div
       className="footer"
@@ -343,10 +370,10 @@ const Footer = () => {
             </div>
           </div>
           <div className="options__left">
-            <div className="media__heart">
+            <div className="media__heart" data-title="Thêm vào thư viện">
               <i className="fa-regular fa-heart"></i>
             </div>
-            <div className="np__menu" ref={domNode}>
+            <div className="np__menu" ref={domNode} data-title="Xem thêm">
               <div
                 className="np__menu__option"
                 onClick={() => {
@@ -367,10 +394,10 @@ const Footer = () => {
                       <h2>{infoSong.title}</h2>
                       <div>
                         <span>
-                          <i className="fa-regular fa-heart"></i>
+                          <i className="fa-regular fa-heart"></i> {like}
                         </span>
                         <span>
-                          <i className="fa-solid fa-headphones"></i> 138K
+                          <i className="fa-solid fa-headphones"></i> {listen}
                         </span>
                       </div>
                     </div>
@@ -457,11 +484,14 @@ const Footer = () => {
       <div className="media__content">
         <div className="controller__media">
           <span
-            className={`controller__itemmedia ${
+            className={`controller__itemmedia ldt__after__10 ldt__before__-40 ${
               randomPlayList === "random" ? "active__tolltip" : ""
             }`}
             onClick={() =>
               setRandomPlayList(randomPlayList === "" ? "random" : "")
+            }
+            data-title={
+              randomPlayList === "" ? "Phát ngẫu nhiên" : "Tắt phát ngẫu nhiên"
             }
           >
             <i className="fas fa-random"></i>
@@ -485,7 +515,7 @@ const Footer = () => {
             <i className="fas fa-step-forward"></i>
           </span>
           <span
-            className={`controller__itemmedia ${
+            className={`controller__itemmedia ldt__after__10 ldt__before__-40 ${
               repeatTolltip && "active__tolltip"
             }`}
             onClick={() =>
@@ -494,6 +524,11 @@ const Footer = () => {
                   (repeatTolltip === "repeatAll" && "repeatOne") ||
                   (repeatTolltip === "repeatOne" && "")
               )
+            }
+            data-title={
+              (!repeatTolltip && "Phát lại tất cả") ||
+              (repeatTolltip === "repeatAll" && "Phát lại 1 bài") ||
+              (repeatTolltip === "repeatOne" && "Tắt phát lại")
             }
           >
             <i
@@ -536,12 +571,13 @@ const Footer = () => {
             setActiveKara(true);
             setMenuKara("lyric");
           }}
+          data-title="Xem lời bài hát"
         >
           <div>
             <i className="fa fa-microphone"></i>
           </div>
         </div>
-        <div className="media__narrow">
+        <div className="media__narrow unclick">
           <div>
             <i className="fa fa-window-restore"></i>
           </div>
@@ -576,11 +612,12 @@ const Footer = () => {
           <span className="divide"></span>
         </div>
         <div
-          className="media__narrow media__list__item"
+          className="media__narrow media__list__item rdt__before__0"
           onClick={() => setShowRightBar(!showRightBar)}
           style={{
             background: `${showRightBar ? "var(--purple-primary)" : ""}`,
           }}
+          data-title="Danh sách phát"
         >
           <div>
             <i className="fa fa-align-right"></i>

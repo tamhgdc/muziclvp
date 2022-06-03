@@ -357,3 +357,29 @@
 .transition-kara{
   transition: 1s;
 }
+
+.lyric__error{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.lyric__error-h1{
+  text-transform: capitalize;
+  font-size: 60px;
+  color: white;
+  text-align: center;
+}
+
+.default__play{
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  border: none;
+
+}
+.default__play>img{
+  width: 30px;
+  height: 30px;
+}

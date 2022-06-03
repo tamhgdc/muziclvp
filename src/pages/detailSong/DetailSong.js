@@ -56,7 +56,7 @@ const DetailSong = () => {
                       menuKara === "karaoke" ? "active__detail__menu" : ""
                     }`}
                     onClick={() => {
-                      if (lyric.sentences) setMenuKara("karaoke");
+                      setMenuKara("karaoke");
                     }}
                   >
                     Karaoke
@@ -74,8 +74,11 @@ const DetailSong = () => {
             </div>
             <div className="detail__top__right">
               <div
-                className="item__detail__top__right"
+                className="item__detail__top__right bdt__after tdt__after__47 tdt__before__55"
                 onClick={() => setFullScreen(!fullScreen)}
+                data-title={
+                  !fullScreen ? "Toàn màn hình" : "Thoát toàn màn hình"
+                }
               >
                 <i className="fa-solid fa-up-right-and-down-left-from-center"></i>
               </div>
@@ -83,8 +86,9 @@ const DetailSong = () => {
                 <i className="fa-solid fa-gear"></i>
               </div>
               <div
-                className="item__detail__top__right"
+                className="item__detail__top__right bdt__after tdt__after__47 tdt__before__55"
                 onClick={() => setActiveKara(false)}
+                data-title={"Đóng"}
               >
                 <i className="fa-solid fa-angle-down"></i>
               </div>
