@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import MainLayout from "../../layout/MainLayout";
 import "./playlist.css";
 import PlayListItem from "../../components/playlist/PlayListItem";
@@ -22,6 +22,12 @@ const PlayList = () => {
   const { checkMiniVideo } = useContext(VideoContext);
   const [liked, setLiked] = useState("");
   const params = useParams();
+  const Ref = useRef();
+  const idSongLocal = JSON.parse(localStorage.getItem("idSong"));
+  const playListSongLocal = JSON.parse(localStorage.getItem("playList"));
+
+  let i;
+  let data;
 
   const changePlayAudio = () => {
     if (
@@ -36,6 +42,27 @@ const PlayList = () => {
   useEffect(() => {
     setIdPlayList(params.id.split(".")[0]);
   }, []);
+
+  const findIndex = () => {
+    if (playListSongLocal && idSongLocal) {
+      data = playListSongLocal.playListSong.filter((item) => {
+        return item.streamingStatus !== 2;
+      });
+      data.find((item, index) => {
+        if (item.encodeId === idSongLocal) i = index;
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (Ref && Ref.current) {
+      findIndex();
+      if (i !== "") {
+        Ref.current.scrollTop = 60 * i - 49;
+      }
+    }
+  }, [idSongLocal, Ref]);
+
   useEffect(() => {
     if (playListData) {
       let data = String(playListData.like).split("");
@@ -60,6 +87,7 @@ const PlayList = () => {
                 : "calc(100vh - 70px)"
             }`,
           }}
+          ref={Ref}
         >
           <div className="List__song__main">
             <div className="List__song__right">

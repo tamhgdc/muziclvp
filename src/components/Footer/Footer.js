@@ -44,6 +44,8 @@ const Footer = () => {
   );
   const [like, setLike] = useState("");
   const [listen, setListen] = useState("");
+  const [showNextSong, setShowNextSong] = useState("");
+  const [random, setRandom] = useState("");
 
   const idLocalSong = JSON.parse(localStorage.getItem("idSong"));
   const playListSongLocal = JSON.parse(localStorage.getItem("playList"));
@@ -53,7 +55,8 @@ const Footer = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { songUrl, infoSong, setIdSong, setSeccond } = useContext(SongContext);
+  const { songUrl, infoSong, setIdSong, setSeccond, idSong } =
+    useContext(SongContext);
   const {
     setCheckPlayAudio,
     checkPlayAudio,
@@ -72,9 +75,9 @@ const Footer = () => {
   let length;
 
   const findIndex = () => {
-    if (playListSongLocal !== "") {
+    if (playListSongLocal && idLocalSong) {
       data = playListSongLocal.playListSong.filter((item) => {
-        return params.playlist !== "album" && item.streamingStatus !== 2;
+        return item.streamingStatus !== 2;
       });
       data.find((item, index) => {
         if (item.encodeId === idLocalSong) i = index;
@@ -168,13 +171,15 @@ const Footer = () => {
         default:
           switch (repeatTolltip) {
             case "repeatAll":
-              randomSong();
+              setIdSong(playListSongLocal.playListSong[random].encodeId);
+              playAudio();
               break;
             case "repeatOne":
               playAudio();
               break;
             default:
-              randomSong();
+              setIdSong(playListSongLocal.playListSong[random].encodeId);
+              playAudio();
               break;
           }
           break;
@@ -202,10 +207,31 @@ const Footer = () => {
     if (audio) {
       endTime();
     }
-  }, [audio, repeatTolltip, randomPlayList]);
+  }, [audio, repeatTolltip, randomPlayList, random]);
 
   useEffect(() => {
     localStorage.setItem("randomPlayList", JSON.stringify(randomPlayList));
+    findIndex();
+    if (randomPlayList) {
+      if (i !== "") {
+        let newIndex;
+        do {
+          newIndex = Math.floor(Math.random() * length);
+        } while (newIndex === i);
+        setShowNextSong(playListSongLocal.playListSong[newIndex]);
+        setRandom(newIndex);
+      }
+    } else {
+      if (i !== "") {
+        if (i + 1 === length) {
+          i = 0;
+        } else {
+          i = i + 1;
+        }
+        setShowNextSong(playListSongLocal.playListSong[i]);
+        setRandom(i);
+      }
+    }
   }, [randomPlayList]);
 
   const handleSong = () => {
@@ -278,17 +304,7 @@ const Footer = () => {
   };
 
   const nextSongPlayList = () => {
-    if (randomPlayList !== "") {
-      randomSong();
-    } else {
-      findIndex();
-      if (i + 1 === length) {
-        i = 0;
-      } else {
-        i = i + 1;
-      }
-      setIdSong(data[i].encodeId);
-    }
+    setIdSong(playListSongLocal.playListSong[random].encodeId);
     setCheckPlayAudio(true);
   };
 
@@ -511,8 +527,26 @@ const Footer = () => {
             )}
           </span>
 
-          <span className="controller__itemmedia" onClick={nextSongPlayList}>
-            <i className="fas fa-step-forward"></i>
+          <span className="controller__itemmedia">
+            <i className="fas fa-step-forward" onClick={nextSongPlayList}></i>
+            {showNextSong && (
+              <div className="hover__next__song">
+                <div className="hover__next__title">Phát tiếp theo</div>
+                <div className="hover__next__item">
+                  <div className="hover__next__img">
+                    <img src={showNextSong.thumbnail} />
+                  </div>
+                  <div className="hover__next__description">
+                    <div className="hover__next__subtitle">
+                      {showNextSong.title}
+                    </div>
+                    <div className="hover__next__singer">
+                      {showNextSong.artistsNames}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </span>
           <span
             className={`controller__itemmedia ldt__after__10 ldt__before__-40 ${
