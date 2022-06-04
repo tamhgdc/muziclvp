@@ -79,7 +79,7 @@ const Sidebar = () => {
             className="sidebar__scrollbar"
             style={{
               height: `${
-                localStorage.getItem("idSong") && !checkMiniVideo ? "" : "100%"
+                localStorage.getItem("idSong") && !checkMiniVideo ? "" : "calc(100vh - 340px)"
               }`,
             }}
           >
