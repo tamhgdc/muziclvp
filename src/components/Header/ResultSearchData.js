@@ -37,7 +37,6 @@ const ResultSearchData = () => {
         setIdSong(data.encodeId);
         setLoaderSong(true);
         setCheckPlayAudio(true);
-        console.log(data);
         if (data.album) {
           setCheckPlayList(true);
           setIdPlayList(data.album.encodeId);
