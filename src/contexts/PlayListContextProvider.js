@@ -12,7 +12,6 @@ const PlayListContextProvider = ({ children }) => {
   const [checkModalStart, setCheckModalStart] = useState(true);
   const [showRightBar, setShowRightBar] = useState(false);
   const [checkPlayList, setCheckPlayList] = useState(false);
-  const [checkSearch, setCheckSearch] = useState(false);
   const [checkModalVideoVip, setCheckModalVideoVip] = useState(false);
   const [modalPlayAudio, setModalPlayAudio] = useState(false);
 
@@ -36,7 +35,6 @@ const PlayListContextProvider = ({ children }) => {
       playListData.song.items.forEach((item) => {
         d.push(item);
       });
-
       localStorage.setItem(
         "playList",
         JSON.stringify({
@@ -63,8 +61,7 @@ const PlayListContextProvider = ({ children }) => {
     checkModalStart,
     setCheckModalStart,
     setCheckPlayList,
-    setCheckSearch,
-    checkSearch,
+
     setCheckModalVideoVip,
     checkModalVideoVip,
     setModalPlayAudio,

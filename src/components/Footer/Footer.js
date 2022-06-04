@@ -61,8 +61,6 @@ const Footer = () => {
     setShowRightBar,
     showRightBar,
     setCheckPlayList,
-    setIdPlayList,
-    checkSearch,
   } = useContext(PlayListContext);
   const { checkChangeVideo } = useContext(VideoContext);
 
@@ -335,12 +333,8 @@ const Footer = () => {
   };
 
   const changePage = () => {
-    if (!checkSearch) {
+    if (playListSongLocal) {
       navigate(playListSongLocal.url);
-      setIdPlayList(playListSongLocal.encodeId);
-    } else {
-      navigate(infoSong.album.link);
-      setIdPlayList(infoSong.album.encodeId);
     }
   };
 

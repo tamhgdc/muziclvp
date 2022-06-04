@@ -13,8 +13,7 @@ const ItemSongSearch = ({ data }) => {
     checkPlayAudio,
     setCheckModalVip,
     setCheckPlayList,
-    setCheckSearch,
-    checkSearch,
+    setIdPlayList,
   } = useContext(PlayListContext);
 
   const { setIdVideo, setCheckMiniVideo, setCheckChangeVideo } =
@@ -29,35 +28,20 @@ const ItemSongSearch = ({ data }) => {
         setIdSong(data.encodeId);
         setLoaderSong(true);
         setCheckPlayAudio(true);
-        setCheckPlayList(true);
+        if (data.album) {
+          setCheckPlayList(true);
+          setIdPlayList(data.album.encodeId);
+        }
       } else {
         setCheckModalVip(true);
       }
     } else {
       setCheckPlayAudio(!checkPlayAudio);
     }
-    setCheckSearch(true);
     setCheckChangeVideo(false);
     setCheckMiniVideo(false);
     setIdVideo("");
   };
-
-  useEffect(() => {
-    if (!loaderSong && infoSong && checkSearch) {
-      if (infoSong.album) {
-        localStorage.setItem(
-          "playList",
-          JSON.stringify({
-            encodeId: infoSong.album.encodeId,
-            url: infoSong.album.link,
-            playListSong: [{ ...infoSong }],
-            title: infoSong.album.title,
-          })
-        );
-      }
-      setCheckSearch(false);
-    }
-  }, [infoSong, checkSearch, loaderSong]);
 
   return (
     <li

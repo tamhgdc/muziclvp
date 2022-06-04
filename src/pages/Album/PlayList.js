@@ -5,7 +5,7 @@ import PlayListItem from "../../components/playlist/PlayListItem";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import LoadList from "../../components/playlist/LoadList";
 import { SongContext } from "../../contexts/SongContextProvider";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { VideoContext } from "../../contexts/VideoContextProvider";
 
 const PlayList = () => {
@@ -23,6 +23,7 @@ const PlayList = () => {
   const [liked, setLiked] = useState("");
   const params = useParams();
   const Ref = useRef();
+  const navigate = useNavigate();
   const idSongLocal = JSON.parse(localStorage.getItem("idSong"));
   const playListSongLocal = JSON.parse(localStorage.getItem("playList"));
 
@@ -30,10 +31,7 @@ const PlayList = () => {
   let data;
 
   const changePlayAudio = () => {
-    if (
-      params.id.split(".")[0] ===
-      JSON.parse(localStorage.getItem("playList")).encodeId
-    ) {
+    if (params.id.split(".")[0] === playListSongLocal.encodeId) {
       setCheckPlayAudio(!checkPlayAudio);
     } else {
       setModalPlayAudio(true);
@@ -61,6 +59,7 @@ const PlayList = () => {
         Ref.current.scrollTop = 60 * i - 49;
       }
     }
+    navigate(playListData.link);
   }, [idSongLocal, Ref, playListData]);
 
   useEffect(() => {
@@ -97,8 +96,8 @@ const PlayList = () => {
                   <div className="option__selection item__play__selection">
                     {!loaderSong &&
                     checkPlayAudio &&
-                    params.id.split(".")[0] ===
-                      JSON.parse(localStorage.getItem("playList")).encodeId ? (
+                    playListSongLocal &&
+                    params.id.split(".")[0] === playListSongLocal.encodeId ? (
                       <span className="gif__play">
                         <img
                           src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/icons/icon-playing.gif"
@@ -129,16 +128,16 @@ const PlayList = () => {
                       className={`fa-solid ${
                         !loaderSong &&
                         checkPlayAudio &&
-                        params.id.split(".")[0] ===
-                          JSON.parse(localStorage.getItem("playList")).encodeId
+                        playListSongLocal &&
+                        params.id.split(".")[0] === playListSongLocal.encodeId
                           ? "fa-pause"
                           : "fa-play"
                       }`}
                     ></i>{" "}
                     {!loaderSong &&
                     checkPlayAudio &&
-                    params.id.split(".")[0] ===
-                      JSON.parse(localStorage.getItem("playList")).encodeId
+                    playListSongLocal &&
+                    params.id.split(".")[0] === playListSongLocal.encodeId
                       ? "tạm dừng"
                       : "tiếp tục phát"}
                   </span>

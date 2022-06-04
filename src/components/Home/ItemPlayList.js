@@ -4,13 +4,12 @@ import SingerItem from "./SingerItem";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 
 const ItemPlayList = ({ playList, checkTitle }) => {
-  const { setIdPlayList, setCheckSearch, checkPlayAudio, setCheckPlayList } =
+  const { setIdPlayList, checkPlayAudio, setCheckPlayList } =
     useContext(PlayListContext);
   const playListLocal = JSON.parse(localStorage.getItem("playList")) || "";
 
   const handlePlaylist = () => {
     setIdPlayList(playList.encodeId);
-    setCheckSearch(false);
     setCheckPlayList(false);
   };
   return (
