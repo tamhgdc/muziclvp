@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { SongContext } from "../../contexts/SongContextProvider";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { VideoContext } from "../../contexts/VideoContextProvider";
 import { KaraokeContext } from "../../contexts/KaraokeContextProvider";
 
@@ -52,11 +52,9 @@ const Footer = () => {
 
   let newRef = useRef();
   let domNode = useClickOutSide(() => setIsDisplay(false));
-  const params = useParams();
   const navigate = useNavigate();
 
-  const { songUrl, infoSong, setIdSong, setSeccond, idSong } =
-    useContext(SongContext);
+  const { songUrl, infoSong, setIdSong, setSeccond } = useContext(SongContext);
   const {
     setCheckPlayAudio,
     checkPlayAudio,
@@ -171,15 +169,23 @@ const Footer = () => {
         default:
           switch (repeatTolltip) {
             case "repeatAll":
-              setIdSong(playListSongLocal.playListSong[random].encodeId);
+              if (i + 1 === length) {
+              } else {
+                setIdSong(playListSongLocal.playListSong[random].encodeId);
+              }
               playAudio();
               break;
             case "repeatOne":
               playAudio();
               break;
             default:
-              setIdSong(playListSongLocal.playListSong[random].encodeId);
-              playAudio();
+              if (i + 1 === length) {
+                pauseAudio();
+              } else {
+                setIdSong(playListSongLocal.playListSong[random].encodeId);
+                playAudio();
+              }
+
               break;
           }
           break;
@@ -213,13 +219,15 @@ const Footer = () => {
     localStorage.setItem("randomPlayList", JSON.stringify(randomPlayList));
     findIndex();
     if (randomPlayList) {
-      if (i !== "") {
-        let newIndex;
-        do {
-          newIndex = Math.floor(Math.random() * length);
-        } while (newIndex === i);
-        setShowNextSong(playListSongLocal.playListSong[newIndex]);
-        setRandom(newIndex);
+      if (length > 1) {
+        if (i !== "") {
+          let newIndex;
+          do {
+            newIndex = Math.floor(Math.random() * length);
+          } while (newIndex === i);
+          setShowNextSong(playListSongLocal.playListSong[newIndex]);
+          setRandom(newIndex);
+        }
       }
     } else {
       if (i !== "") {
@@ -604,6 +612,7 @@ const Footer = () => {
           onClick={() => {
             setActiveKara(true);
             setMenuKara("lyric");
+            setShowRightBar(false);
           }}
           data-title="Xem lời bài hát"
         >
