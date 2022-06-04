@@ -61,7 +61,7 @@ const PlayList = () => {
         Ref.current.scrollTop = 60 * i - 49;
       }
     }
-  }, [idSongLocal, Ref]);
+  }, [idSongLocal, Ref, playListData]);
 
   useEffect(() => {
     if (playListData) {
