@@ -90,7 +90,9 @@ const DetailSong = () => {
               </div>
               <div
                 className="item__detail__top__right bdt__after tdt__after__47 tdt__before__55"
-                onClick={() => setActiveKara(false)}
+                onClick={() => {
+                  setActiveKara(false), setFullScreen(false);
+                }}
                 data-title={"Đóng"}
               >
                 <i className="fa-solid fa-angle-down"></i>
