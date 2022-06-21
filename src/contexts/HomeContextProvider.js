@@ -32,7 +32,7 @@ const HomeContextProvider = ({ children }) => {
   useEffect(() => {
     if (dataHome) {
       setLoader(false);
-      dataHome[8].items.forEach((a, index) => {
+      dataHome[7].items.forEach((a, index) => {
         if (index < 3) ab += a.score;
       });
       setRank(ab);

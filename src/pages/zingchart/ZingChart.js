@@ -34,7 +34,7 @@ const ZingChart = () => {
                 <i className="fa-solid fa-play"></i>
               </button>
             </div>
-            <LibraryZing rank={rank} data={dataHome[8]} />
+            <LibraryZing rank={rank} data={dataHome[7]} />
           </div>
           <TopSong />
           <div className="zingchart__weekly">

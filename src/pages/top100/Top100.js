@@ -39,7 +39,7 @@ const Top100 = () => {
                 <span>Nổi bật</span>
               </div>
               <div className="list__playlist__selection">
-                {dataHome[5].items.map((item, index) => {
+                {dataHome[3].items.map((item, index) => {
                   return <OutStanding key={index} playList={item} />;
                 })}
               </div>
@@ -49,7 +49,7 @@ const Top100 = () => {
             <div className="section__title mt-40">
               <h3>nhạc việt nam</h3>
             </div>
-            <SongVN playList={dataHome[11]} />
+            <SongVN playList={dataHome[12]} />
           </div>
           <div className="topic-category mb-40">
             <div className="section__title mt-40">
@@ -61,13 +61,13 @@ const Top100 = () => {
             <div className="section__title mt-40">
               <h3>nhạc âu mỹ</h3>
             </div>
-            <SongVN playList={dataHome[11]} />
+            <SongVN playList={dataHome[12]} />
           </div>
           <div className="topic-category">
             <div className="section__title mt-40">
               <h3>nhạc hòa tấu</h3>
             </div>
-            <SongVN playList={dataHome[11]} />
+            <SongVN playList={dataHome[12]} />
           </div>
         </div>
       )}

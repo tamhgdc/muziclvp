@@ -40,8 +40,6 @@ const ResultSearchData = () => {
         if (data.album) {
           setCheckPlayList(true);
           setIdPlayList(data.album.encodeId);
-        } else {
-          localStorage.setItem("playlist", "");
         }
       } else {
         setCheckModalVip(true);
@@ -100,7 +98,7 @@ const ResultSearchData = () => {
               </li>
             </ul>
           </div>
-          {dataSearch && dataSearch.top && (
+          {dataSearch && dataSearch.songs && (
             <>
               <div className="top__reult" style={{ marginTop: "80px" }}>
                 <h3>
@@ -109,14 +107,14 @@ const ResultSearchData = () => {
               </div>
               <div className="rightbar__playlist search__top">
                 <div className="right fix__search">
-                  <div onClick={() => handleOnclick(dataSearch.top)}>
-                    <img src={dataSearch.top.thumbnail} />
+                  <div onClick={() => handleOnclick(dataSearch.songs[0])}>
+                    <img src={dataSearch.songs[0].thumbnail} />
                     <div
                       className="option__playlist__selection"
                       style={{
                         opacity: `${
                           JSON.parse(localStorage.getItem("idSong")) ===
-                          dataSearch.top.encodeId
+                          dataSearch.songs[0].encodeId
                             ? "1"
                             : "0"
                         }`,
@@ -129,7 +127,7 @@ const ResultSearchData = () => {
                         {!loaderSong &&
                         checkPlayAudio &&
                         JSON.parse(localStorage.getItem("idSong")) ===
-                          dataSearch.top.encodeId ? (
+                          dataSearch.songs[0].encodeId ? (
                           <span
                             className="gif__play"
                             style={{
@@ -149,7 +147,7 @@ const ResultSearchData = () => {
                           </span>
                         ) : loaderSong &&
                           JSON.parse(localStorage.getItem("idSong")) ===
-                            dataSearch.top.encodeId ? (
+                            dataSearch.songs[0].encodeId ? (
                           <img
                             src={loadingGift}
                             style={{
@@ -171,10 +169,10 @@ const ResultSearchData = () => {
                   </div>
                   <div className="item__title__album title__rightbar search__title">
                     <div>
-                      <p>{dataSearch.top.title}</p>
+                      <p>{dataSearch.songs[0].title}</p>
                       <div className="singer__rightbar">
-                        {dataSearch.top.artists &&
-                          dataSearch.top.artists.map((a, index) => {
+                        {dataSearch.songs[0].artists &&
+                          dataSearch.songs[0].artists.map((a, index) => {
                             return <SingerItem key={index} artist={a} />;
                           })}
                       </div>
