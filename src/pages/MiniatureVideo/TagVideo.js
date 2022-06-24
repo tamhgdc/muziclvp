@@ -19,6 +19,7 @@ const TagVideo = () => {
     setReCommends,
     setCheckChangeVideo,
     checkMiniVideo,
+    setChangeMiniVideToVideo,
   } = useContext(VideoContext);
   const [video, setVideo] = useState("");
   const [isPlay, setIsPlay] = useState(false);
@@ -180,6 +181,7 @@ const TagVideo = () => {
               onClick={() => {
                 setCheckMiniVideo(false);
                 navigate(dataVideo.link);
+                setChangeMiniVideToVideo(true);
               }}
             ></i>
           </div>

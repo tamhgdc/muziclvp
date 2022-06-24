@@ -25,6 +25,8 @@ const Video = () => {
     setReCommends,
     setCheckMiniVideo,
     setCheckChangeVideo,
+    changeMiniVideToVideo,
+    setChangeMiniVideToVideo,
   } = useContext(VideoContext);
   const { checkModalVideoVip, setCheckModalVideoVip } =
     useContext(PlayListContext);
@@ -44,6 +46,10 @@ const Video = () => {
 
   useEffect(() => {
     setCheckRenderList(true);
+    if (changeMiniVideToVideo) {
+      setCheckRenderList(false);
+      setChangeMiniVideToVideo(false);
+    }
     setIdVideo(params.id.split(".")[0]);
   }, []);
 

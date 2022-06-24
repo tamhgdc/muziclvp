@@ -20,6 +20,7 @@ const VideoContextProvider = ({ children }) => {
   const [checkMiniVideo, setCheckMiniVideo] = useState(false);
   const [currentTimeShared, setCurrentTimeShared] = useState("");
   const [currentSound, setCurrentSound] = useState("0");
+  const [changeMiniVideToVideo, setChangeMiniVideToVideo] = useState(false);
 
   const getVideo = async () => {
     await getVideoApi(idVideo).then((data) => {
@@ -82,6 +83,8 @@ const VideoContextProvider = ({ children }) => {
     convertMS,
     currentSound,
     setCurrentSound,
+    setChangeMiniVideToVideo,
+    changeMiniVideToVideo,
   };
 
   return <VideoContext.Provider value={data}>{children}</VideoContext.Provider>;
