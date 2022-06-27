@@ -82,6 +82,8 @@ const Footer = () => {
     }
   };
 
+  // console.log(showNextSong);
+
   const randomSong = () => {
     findIndex();
 
@@ -223,7 +225,7 @@ const Footer = () => {
           do {
             newIndex = Math.floor(Math.random() * length);
           } while (newIndex === i);
-          setShowNextSong(playListSongLocal.playListSong[newIndex]);
+          setShowNextSong(data[newIndex]);
           setRandom(newIndex);
         }
       }
@@ -234,7 +236,7 @@ const Footer = () => {
         } else {
           i = i + 1;
         }
-        setShowNextSong(playListSongLocal.playListSong[i]);
+        setShowNextSong(data[i]);
         setRandom(i);
       }
     }
@@ -310,7 +312,8 @@ const Footer = () => {
   };
 
   const nextSongPlayList = () => {
-    setIdSong(playListSongLocal.playListSong[random].encodeId);
+    findIndex();
+    setIdSong(data[random].encodeId);
     setCheckPlayAudio(true);
   };
 
