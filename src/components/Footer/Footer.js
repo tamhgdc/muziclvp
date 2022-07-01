@@ -82,8 +82,6 @@ const Footer = () => {
     }
   };
 
-  // console.log(showNextSong);
-
   const randomSong = () => {
     findIndex();
 

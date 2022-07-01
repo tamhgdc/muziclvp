@@ -39,7 +39,7 @@ const PlayList = () => {
   };
   useEffect(() => {
     setIdPlayList(params.id.split(".")[0]);
-  }, []);
+  }, [params.id.split(".")[0]]);
 
   const findIndex = () => {
     if (playListSongLocal && idSongLocal) {
@@ -59,8 +59,7 @@ const PlayList = () => {
         Ref.current.scrollTop = 60 * i - 49;
       }
     }
-    navigate(playListData.link);
-  }, [idSongLocal, Ref, playListData]);
+  }, [idSongLocal, Ref]);
 
   useEffect(() => {
     if (playListData) {

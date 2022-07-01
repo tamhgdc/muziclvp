@@ -59,6 +59,7 @@ const Header = () => {
         if (item.album) {
           setCheckPlayList(true);
           setIdPlayList(item.album.encodeId);
+          navigate(item.album.link);
         }
       } else {
         setCheckModalVip(true);
