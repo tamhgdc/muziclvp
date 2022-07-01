@@ -61,7 +61,6 @@ const PlayListContextProvider = ({ children }) => {
     checkModalStart,
     setCheckModalStart,
     setCheckPlayList,
-
     setCheckModalVideoVip,
     checkModalVideoVip,
     setModalPlayAudio,

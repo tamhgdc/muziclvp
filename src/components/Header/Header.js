@@ -5,7 +5,7 @@ import SingerItem from "../../components/Home/SingerItem";
 import loadingGift from "../../assets/images/loading.gif";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 import { SongContext } from "../../contexts/SongContextProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { VideoContext } from "../../contexts/VideoContextProvider";
 
 let useClickOutSide = (handler) => {
@@ -49,6 +49,7 @@ const Header = () => {
     setCheckPlayList,
   } = useContext(PlayListContext);
   const navigate = useNavigate();
+  const params = useParams();
   const handleOnclick = (item) => {
     if (JSON.parse(localStorage.getItem("idSong")) !== item.encodeId) {
       if (item.streamingStatus !== 2) {
@@ -59,7 +60,7 @@ const Header = () => {
         if (item.album) {
           setCheckPlayList(true);
           setIdPlayList(item.album.encodeId);
-          navigate(item.album.link);
+          params.playlist && navigate(item.album.link);
         }
       } else {
         setCheckModalVip(true);
