@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 
 const Radio = ({ playList }) => {
   const [isActive, setIsActive] = useState(false);
@@ -99,4 +99,4 @@ const Radio = ({ playList }) => {
   );
 };
 
-export default Radio;
+export default memo(Radio);

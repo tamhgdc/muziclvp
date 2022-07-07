@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 const ZingChoice = ({ item, index }) => {
   return (
@@ -39,4 +39,4 @@ const ZingChoice = ({ item, index }) => {
   );
 };
 
-export default ZingChoice;
+export default memo(ZingChoice);

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, memo } from "react";
 import SingerItem from "./SingerItem";
 
 const NewRelease = ({ playList }) => {
@@ -147,4 +147,4 @@ const NewRelease = ({ playList }) => {
   );
 };
 
-export default NewRelease;
+export default memo(NewRelease);

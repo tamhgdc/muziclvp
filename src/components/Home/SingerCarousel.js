@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 
 const SingerCarousel = () => {
   const [isActive, setIsActive] = useState(false);
@@ -121,4 +121,4 @@ const SingerCarousel = () => {
   );
 };
 
-export default SingerCarousel;
+export default memo(SingerCarousel);

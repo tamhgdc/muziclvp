@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { memo } from "react";
 import { URL_API } from "../../constants/api";
 
 const GalleryCarousel = ({ banner }) => {
@@ -112,4 +112,4 @@ const GalleryCarousel = ({ banner }) => {
   );
 };
 
-export default GalleryCarousel;
+export default memo(GalleryCarousel);

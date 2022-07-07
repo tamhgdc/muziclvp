@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import LibraryZing from "./LibraryZing";
 import SingerItem from "../SingerItem";
 import { HomeContext } from "../../../contexts/HomeContextProvider";
@@ -94,4 +94,4 @@ const ZingChart = ({ playList }) => {
   );
 };
 
-export default ZingChart;
+export default memo(ZingChart);

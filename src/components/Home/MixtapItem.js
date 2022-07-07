@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import store from "../../store/store";
 
 const MixtapItem = () => {
@@ -228,4 +228,4 @@ const MixtapItem = () => {
   );
 };
 
-export default MixtapItem;
+export default memo(MixtapItem);

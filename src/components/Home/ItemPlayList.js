@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import { Link } from "react-router-dom";
 import SingerItem from "./SingerItem";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
@@ -73,4 +73,4 @@ const ItemPlayList = ({ playList, checkTitle }) => {
   );
 };
 
-export default ItemPlayList;
+export default memo(ItemPlayList);
