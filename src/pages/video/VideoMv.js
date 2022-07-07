@@ -36,7 +36,6 @@ const VideoMv = () => {
     setCurrentTimeShared,
     currentTimeShared,
     checkMiniVideo,
-    setCurrentSound,
   } = useContext(VideoContext);
   const [isPlay, setIsPlay] = useState(false);
   const [isPlayTimeOut, setIsPlayTimeOut] = useState(false);
@@ -44,8 +43,10 @@ const VideoMv = () => {
   const [hiddenTolltip, setHiddenTolltip] = useState(true);
   //xử lý volume
   const [activeSound, setActiveSound] = useState(false);
-  const [widthSound, setWidthSound] = useState("0");
-  const [saveSound, setSaveSound] = useState("");
+  const [widthSound, setWidthSound] = useState("100");
+  const [saveSound, setSaveSound] = useState(
+    JSON.parse(localStorage.getItem("volumevideo")) || ""
+  );
   //xử lý video
   const [currentTime, setCurrentTime] = useState("");
   const [saveCurrentTime, setSaveCurrentTime] = useState("");
@@ -252,39 +253,38 @@ const VideoMv = () => {
   // muted & unmuted volume
   const handleClickSound = () => {
     setActiveSound(!activeSound);
+    video.muted = !activeSound;
   };
 
   useEffect(() => {
     if (video) {
-      if (activeSound) {
+      if (!video.muted && saveSound) {
+        setWidthSound(saveSound);
+        video.volume = saveSound / 100;
+        localStorage.setItem("volumevideo", JSON.stringify(saveSound));
+      } else if (!video.muted) {
         setWidthSound("100");
-        video.volume = 1;
-        video.muted = false;
-        setCurrentSound("1");
-        if (saveSound) {
-          setCurrentSound(saveSound / 100);
-          setWidthSound(saveSound);
-          video.volume = saveSound / 100;
-        }
-      } else {
-        setCurrentSound("0");
+        localStorage.setItem("volumevideo", JSON.stringify("100"));
+      } else if (video.muted) {
         setWidthSound("0");
-        video.muted = true;
-        video.volume = 0;
+        localStorage.setItem("volumevideo", JSON.stringify("0"));
       }
     }
-  }, [video, activeSound, checkMiniVideo]);
+  }, [video, activeSound]);
 
-  //change volume
+  // //change volume
   const changeVolume = (e) => {
+    setWidthSound(e.target.value);
+    setSaveSound(e.target.value);
+    video.volume = e.target.value / 100;
     if (e.target.value > 0) {
-      setWidthSound(e.target.value);
-      setSaveSound(e.target.value);
-      video.volume = e.target.value / 100;
-      setActiveSound(true);
-    } else {
       setActiveSound(false);
+      video.muted = false;
+    } else {
+      setActiveSound(true);
+      setSaveSound("30");
     }
+    localStorage.setItem("volumevideo", JSON.stringify(e.target.value));
   };
 
   return (
@@ -358,7 +358,7 @@ const VideoMv = () => {
             <div className="controls__item__video adjust__volume">
               <div className="media__volume">
                 <div className="icont__volume" onClick={handleClickSound}>
-                  {activeSound ? (
+                  {!activeSound ? (
                     <i className="fa fa-volume-up"></i>
                   ) : (
                     <i className="fa-solid fa-volume-xmark"></i>

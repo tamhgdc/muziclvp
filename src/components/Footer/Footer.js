@@ -35,7 +35,9 @@ const Footer = () => {
   const [replaceTime, setReplaceTime] = useState(false);
   const [activeSound, setActiveSound] = useState(false);
   const [widthSound, setWidthSound] = useState("100");
-  const [saveSound, setSaveSound] = useState("");
+  const [saveSound, setSaveSound] = useState(
+    JSON.parse(localStorage.getItem("volumeAudio")) || ""
+  );
   const [repeatTolltip, setRepeatTolltip] = useState(
     JSON.parse(localStorage.getItem("repeatTolltip")) || ""
   );
@@ -278,37 +280,40 @@ const Footer = () => {
   // muted & unmuted volume
   const handleClickSound = () => {
     setActiveSound(!activeSound);
+    audio.muted = !activeSound;
   };
 
   useEffect(() => {
     if (audio) {
-      if (!activeSound) {
+      if (!audio.muted && saveSound) {
+        setWidthSound(saveSound);
+        audio.volume = saveSound / 100;
+        localStorage.setItem("volumeAudio", JSON.stringify(saveSound));
+      } else if (!audio.muted) {
         setWidthSound("100");
-        audio.volume = 1;
-        audio.muted = false;
-        if (saveSound) {
-          setWidthSound(saveSound);
-          audio.volume = saveSound / 100;
-        }
-      } else {
+        localStorage.setItem("volumeAudio", JSON.stringify("100"));
+      } else if (audio.muted) {
         setWidthSound("0");
-        audio.muted = true;
+        localStorage.setItem("volumeAudio", JSON.stringify("0"));
       }
     }
   }, [audio, activeSound]);
 
-  //change volume
+  // //change volume
   const changeVolume = (e) => {
+    setWidthSound(e.target.value);
+    setSaveSound(e.target.value);
+    audio.volume = e.target.value / 100;
     if (e.target.value > 0) {
-      setWidthSound(e.target.value);
-      setSaveSound(e.target.value);
-      audio.volume = e.target.value / 100;
       setActiveSound(false);
+      audio.muted = false;
     } else {
       setActiveSound(true);
+      setSaveSound("30");
     }
+    localStorage.setItem("volumeAudio", JSON.stringify(e.target.value));
   };
-
+  //next song
   const nextSongPlayList = () => {
     findIndex();
     setIdSong(data[random].encodeId);

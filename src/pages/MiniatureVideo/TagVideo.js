@@ -14,7 +14,6 @@ const TagVideo = () => {
     loaderSong,
     repeatVideo,
     autoPlayVideo,
-    currentSound,
     checkRenderList,
     setReCommends,
     setCheckChangeVideo,
@@ -62,7 +61,7 @@ const TagVideo = () => {
     if (video && checkMiniVideo) {
       playVideo();
       video.currentTime = currentTimeShared;
-      video.volume = currentSound;
+      video.volume = JSON.parse(localStorage.getItem("volumevideo")) / 100;
     }
   }, [video, checkMiniVideo]);
 
