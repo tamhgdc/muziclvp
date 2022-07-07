@@ -1,26 +1,21 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import "./modal.css";
 import { PlayListContext } from "../../contexts/PlayListContextProvider";
 
 const Modal = () => {
   const { setCheckModalVip } = useContext(PlayListContext);
-  const [modal, setModal] = useState("");
   const Ref = useRef();
   useEffect(() => {
-    if (Ref) setModal(Ref);
-  }, []);
-
-  useEffect(() => {
-    const handleModal = (e) => {
-      if (!modal.current.contains(e.target)) {
-        setCheckModalVip(false);
-      }
-    };
-    if (modal) {
+    if (Ref) {
+      const handleModal = (e) => {
+        if (!Ref.current.contains(e.target)) {
+          setCheckModalVip(false);
+        }
+      };
       document.addEventListener("mousedown", handleModal);
+      return () => document.removeEventListener("mousedown", handleModal);
     }
-    return () => document.removeEventListener("mousedown", handleModal);
-  });
+  }, []);
 
   return (
     <div className="modal">

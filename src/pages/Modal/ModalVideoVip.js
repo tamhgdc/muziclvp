@@ -4,23 +4,18 @@ import { PlayListContext } from "../../contexts/PlayListContextProvider";
 
 const ModalVideoVip = () => {
   const { setCheckModalVideoVip } = useContext(PlayListContext);
-  const [modal, setModal] = useState("");
   const Ref = useRef();
   useEffect(() => {
-    if (Ref) setModal(Ref);
-  }, []);
-
-  useEffect(() => {
-    const handleModal = (e) => {
-      if (!modal.current.contains(e.target)) {
-        setCheckModalVideoVip(false);
-      }
-    };
-    if (modal) {
+    if (Ref) {
+      const handleModal = (e) => {
+        if (!Ref.current.contains(e.target)) {
+          setCheckModalVideoVip(false);
+        }
+      };
       document.addEventListener("mousedown", handleModal);
+      return () => document.removeEventListener("mousedown", handleModal);
     }
-    return () => document.removeEventListener("mousedown", handleModal);
-  });
+  }, []);
 
   return (
     <div className="modal">
