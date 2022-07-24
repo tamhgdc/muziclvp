@@ -18,7 +18,7 @@ const Radio = ({ playList }) => {
             <div key={index} className="item__playlist__audio">
               <a href="#">
                 <div className="img__playlist__audio">
-                  <img src={item.program.thumbnail} alt="" />
+                  <img src={item?.program.thumbnail} alt="" />
                   <div className="option__playlist__audio">
                     <div className="option__audio">
                       {/* <i className="fa-solid fa-play"></i> */}

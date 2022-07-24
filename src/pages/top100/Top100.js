@@ -39,7 +39,7 @@ const Top100 = () => {
                 <span>Nổi bật</span>
               </div>
               <div className="list__playlist__selection">
-                {dataHome[3].items.map((item, index) => {
+                {dataHome[9].items.map((item, index) => {
                   return <OutStanding key={index} playList={item} />;
                 })}
               </div>
@@ -55,7 +55,7 @@ const Top100 = () => {
             <div className="section__title mt-40">
               <h3>nhạc châu á</h3>
             </div>
-            <SongAsia playList={dataHome[3]} />
+            <SongAsia playList={dataHome[9]} />
           </div>
           <div className="topic-top__100__item">
             <div className="section__title mt-40">

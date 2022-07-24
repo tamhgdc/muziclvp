@@ -64,7 +64,7 @@ const Home = () => {
                 <span>Có Thể Bạn Muốn Nghe</span>
               </div>
               <div className="list__playlist__selection">
-                {dataHome[3].items.map((item, index) => {
+                {dataHome[11].items.map((item, index) => {
                   if (index <= 4) {
                     return (
                       <ItemPlayList
@@ -83,7 +83,7 @@ const Home = () => {
                 <span>Lựa Chọn Hôm Nay</span>
               </div>
               <div className="list__playlist__selection">
-                {dataHome[3].items.map((item, index) => {
+                {dataHome[4].items.map((item, index) => {
                   if (index <= 4) {
                     return (
                       <ItemPlayList
@@ -102,7 +102,7 @@ const Home = () => {
                 <span>XONE's CORNER</span>
               </div>
               <div className="list__playlist__selection">
-                {dataHome[4].items.map((item, index) => {
+                {dataHome[11].items.map((item, index) => {
                   if (index <= 4) {
                     return (
                       <ItemPlayList
@@ -223,8 +223,8 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="list__playlist__selection">
-                    {dataHome[10].items &&
-                      dataHome[10].items.map((item, index) => {
+                    {dataHome[9].items &&
+                      dataHome[9].items.map((item, index) => {
                         if (index <= 4) {
                           return (
                             <ItemPlayList
@@ -238,7 +238,7 @@ const Home = () => {
                   </div>
                 </div>
 
-                <EventChanel playList={dataHome[11]} />
+                <EventChanel playList={dataHome[10]} />
 
                 <div className="playlist__selection">
                   <div className="header__playlist__selection">
@@ -257,13 +257,13 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="new__release">
-                    {dataHome[12].items && (
-                      <NewRelease playList={dataHome[12]} />
+                    {dataHome[11].items && (
+                      <NewRelease playList={dataHome[11]} />
                     )}
                   </div>
                   <div className="list__playlist__selection">
-                    {dataHome[14].items &&
-                      dataHome[14].items.map((item, index) => {
+                    {dataHome[12].items &&
+                      dataHome[12].items.map((item, index) => {
                         if (index <= 4) {
                           return (
                             <ItemPlayList
@@ -283,8 +283,8 @@ const Home = () => {
                   </div>
                   <div className="list__playlist__selection">
                     <div className="favorite__artist">
-                      {dataHome[15] &&
-                        dataHome[15].items.map((item, index) => {
+                      {dataHome[13] &&
+                        dataHome[13].items.map((item, index) => {
                           if (index < 3) {
                             return (
                               <ZingChoice
